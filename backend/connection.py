@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 
+
 def connect_to_database():
     try:
         # Update the connection parameters as needed
@@ -21,6 +22,7 @@ def connect_to_database():
         if connection.is_connected():
             connection.close()
             print("MySQL connection is closed")
+
 
 if __name__ == "__main__":
     connect_to_database()
