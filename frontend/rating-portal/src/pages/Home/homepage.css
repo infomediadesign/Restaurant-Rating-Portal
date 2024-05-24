@@ -14,27 +14,6 @@ body {
   height: 100vh;
 }
 
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-[data-testid="brandName"] {
-  font-size: 3em;
-  color: #000000;
-  text-decoration: none;
-  font-style: italic;
-  font-weight: 500;
-}
-
-.nav-link {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
-  padding: 10px;
-}
-
 .content {
   display: flex;
   flex: 1;
