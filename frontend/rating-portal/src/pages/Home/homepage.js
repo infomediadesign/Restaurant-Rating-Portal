@@ -1,28 +1,14 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import "./homepage.css";
 import myImage from "../../images/homepageimg.jpg";
+import Navbar from "../../components/navbar";
 
 const Home = () => {
   return (
     <div className="container">
-      <nav data-testid="main_nav" className="navbar">
-        <NavLink to="/" data-testid="brandName">
-          EatInsight
-        </NavLink>
-        <NavLink to="/restaurants" className="nav-link" activeClassName="active">
-          RESTAURANTS
-        </NavLink>
-        <NavLink to="/aboutus" className="nav-link" activeClassName="active">
-          ABOUT US
-        </NavLink>
-        <NavLink to="/contactus" className="nav-link" activeClassName="active">
-          CONTACT US
-        </NavLink>
-        <NavLink to="/login" className="nav-link" activeClassName="active">
-          SIGN IN
-        </NavLink>
-      </nav>
+      <div>
+        <Navbar/>
+      </div>
       <div className="content">
         <div className="left-content">
           <h2>Welcome to EatInsight.</h2>
