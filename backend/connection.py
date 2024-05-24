@@ -36,6 +36,7 @@ def check_connection():
 def create_tables_if_not_exists():
     create_users_table_sql = ("CREATE TABLE IF NOT EXISTS `c1sad`.`users` ("
                               "`pk_user` int NOT NULL AUTO_INCREMENT, "
+                              "`email` varchar(255) NOT NULL UNIQUE, `"
                               "`given_name` varchar(50) NOT NULL, "
                               "`surname` varchar(50) NOT NULL,"
                               "`password` varchar(255) NOT NULL,"
