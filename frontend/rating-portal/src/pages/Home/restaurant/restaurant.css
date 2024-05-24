@@ -1,137 +1,143 @@
-    /* src/pages/Home/restaurant/restaurant.css */
-    body {
-        overflow: hidden;
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-    }
+/* Restaurant List */
+.restaurant-list-container {
+    position: relative;
+    padding: 20px;
+    border-radius: 10px;
+}
 
-    * {
-        margin-block-start: 0;
-        margin-block-end: 0;
-    }
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: url('../../images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    filter: brightness(0.5);
+}
 
-    .restaurant-list-container {
-        position: relative;
-        padding: 20px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.85);
-    }
+.restaurant-card-wrapper {
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
 
-    .background-image {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background: url('../../../images/background.jpg') no-repeat center center fixed;
-        background-size: cover;
-        filter: brightness(0.5);
-    }
+.restaurant-card-wrapper:hover {
+    transform: scale(1.05);
+}
 
-    .restaurant-card-wrapper {
-        cursor: pointer;
-        border-radius: 10px;
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
 
-    .restaurant-card-wrapper:hover {
-        transform: scale(1.05);
-    }
+/* Restaurant Detail */
+.restaurant-detail-container {
+    font-family: 'Arial, sans-serif';
+    color: #333;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
 
-    .restaurant-card {
-        width: 300px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        margin: 10px;
-    }
+.restaurant-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    .restaurant-card img {
-        width: 100%;
-        border-radius: 5px;
-        margin-bottom: 10px;
-    }
+.restaurant-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
 
-    .restaurant-detail-container {
-        font-family: 'Arial, sans-serif';
-        color: '#333';
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 20px;
-        position: relative;
-    }
+.restaurant-details {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
 
-    .restaurant-image img {
-        width: 100%;
-        max-height: 400px;
-        object-fit: cover;
-        border-radius: 10px;
-        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    }
+.restaurant-details h1 {
+    font-size: 36px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
 
-    .restaurant-details {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
+.restaurant-details p {
+    font-size: 18px;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
 
-    .user-reviews {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
+.rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
-    .review-form {
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
+.user-reviews {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
 
-    .not-found {
-        padding: 20px;
-        text-align: center;
-    }
+.user-reviews h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
 
-    .rating p {
-        font-size: 18px;
-        margin-right: 10px;
-    }
+.review {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
 
-    .review {
-        margin-bottom: 20px;
-        padding: 10px;
-        border-radius: 10px;
-        background-color: #f9f9f9;
-        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    }
+.review-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
 
-    .review-form input,
-    .review-form textarea {
-        font-size: 16px;
-        padding: 8px;
-        width: 100%;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        margin-bottom: 10px;
-    }
+.review-form h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
 
-    .review-form button {
-        font-size: 16px;
-        padding: 10px 20px;
-        background-color: #ff6347;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    }
+input,
+textarea {
+    font-size: 16px;
+    padding: 8px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+button {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
