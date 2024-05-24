@@ -1,6 +1,6 @@
     // src/pages/Restaurant/RestaurantCard.js
     import React from 'react';
-    import '/Users/riddhiodedra/Desktop/sad-01-24-gitguardians/frontend/rating-portal/src/pages/Home/restaurant/restaurant.css';
+    import './restaurant.css';
 
     const RestaurantCard = ({ restaurant }) => {
     return (

@@ -4,9 +4,9 @@
     import { useNavigate } from 'react-router-dom';
     import './restaurant.css';
 
-    import restaurant1 from '../../../images/littleindia.jpg';
-    import restaurant2 from '../../../images/naan&curry.png';
-    import restaurant3 from '../../../images/image.png';
+    import restaurant1 from '../../images/littleindia.jpg';
+    import restaurant2 from '../../images/naan&curry.png';
+    import restaurant3 from '../../images/image.png';
 
     const sampleRestaurants = [
     {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/homepage';
-import RestaurantList from '/Users/riddhiodedra/Desktop/sad-01-24-gitguardians/frontend/rating-portal/src/pages/Home/restaurant/RestaurantList.js';
-import RestaurantDetail from '/Users/riddhiodedra/Desktop/sad-01-24-gitguardians/frontend/rating-portal/src/pages/Home/restaurant/RestaurantDetail.js';
+import RestaurantList from './pages/restaurant/RestaurantList';
+import RestaurantDetail from './pages/restaurant/RestaurantDetail';
 import './App.css';
 
 function App() {
