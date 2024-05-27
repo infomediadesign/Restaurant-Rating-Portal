@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home/homepage';
-import RestaurantList from './pages/restaurant/RestaurantList';
-import RestaurantDetail from './pages/restaurant/RestaurantDetail';
-import './App.css';
+import Navbar from './components/Navbar';
+import Home from './pages/HomePage';
+import RestaurantList from './components/Restaurant/RestaurantList';
+import RestaurantDetail from './components/Restaurant/RestaurantDetail';
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/restaurants" element={<RestaurantList />} />
