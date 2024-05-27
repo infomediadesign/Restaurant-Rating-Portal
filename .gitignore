@@ -1,0 +1,7 @@
+
+backend/user_service/.env
+backend/gateway/.env
+backend/ratings/.env
+backend/reports/.env
+backend/restaurants/.env
+backend/ratings/.env
