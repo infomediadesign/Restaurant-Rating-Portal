@@ -28,54 +28,47 @@ def verify_password(username, password):
 @app.route('/registerdata', methods=['POST'])
 @auth.login_required
 def insert_data():
+    # Extract data from the request
     data = request.json
     if not data:
         return jsonify({"error": "No data provided in request body"}), 400
 
-    # Check if all required fields are present in the request data
-    required_fields = ['given_name', 'surname', 'email', 'password']
-    for field in required_fields:
-        if field not in data:
-            return jsonify({"error": f"Field '{field}' is missing in request body"}), 400
+    # Call the register service to handle data insertion
+    register_url = "http://localhost:5001/registerdata"  # Adjust the URL as needed
+    response = requests.post(register_url, json=data)
 
-    # Hash the password using bcrypt
-    hashed_password = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
-
-    connection = create_connection()
-    if connection is None:
-        return jsonify({"error": "Failed to connect to the database"}), 500
-
-    cursor = connection.cursor()
-    try:
-        query = "INSERT INTO users (given_name, surname, email, password) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (data['given_name'], data['surname'], data['email'], hashed_password))
-        connection.commit()
+    # Check the response from the register service
+    if response.status_code == 200:
         return jsonify({"message": "Data inserted successfully"})
-    except Error as e:
-        connection.rollback()
-        return jsonify({"error": str(e)}), 500
-    finally:
-        cursor.close()
-        connection.close()
+    elif response.status_code == 400:
+        return jsonify({"error": "Failed to insert data: Bad request"}), 400
+    else:
+        return jsonify({"error": "Failed to insert data"}), 500
 
 
-@app.route('/data', methods=['GET'])
+
+@app.route('/logindata', methods=['POST'])
 @auth.login_required
-def get_data():
-    connection = create_connection()
-    if connection is None:
-        return jsonify({"error": "Failed to connect to the database"}), 500
+def login_data():
+    # Extract data from the request
+    data = request.json
+    if not data:
+        return jsonify({"error": "No data provided in request body"}), 400
 
-    cursor = connection.cursor(dictionary=True)
-    try:
-        cursor.execute("SELECT * FROM users")
-        rows = cursor.fetchall()
-        return jsonify(rows)
-    except Error as e:
-        return jsonify({"error": str(e)}), 500
-    finally:
-        cursor.close()
-        connection.close()
+    # Call the login service to handle login
+    login_url = "http://localhost:5002/logindata"
+    response = requests.post(login_url, json=data)
+
+    # Check the response from the login service
+    if response.status_code == 200:
+        return jsonify({"message": "User logged in successfully"})
+    elif response.status_code == 401:
+        return jsonify({"error": "Invalid username or password"}), 401
+    else:
+        return jsonify({"error": "Failed to log in"}), 500
+
+
+
 
 
 if __name__ == '__main__':
