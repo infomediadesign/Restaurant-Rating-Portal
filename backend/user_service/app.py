@@ -1,15 +1,31 @@
 from flask import Flask, jsonify, request
+from flask_httpauth import HTTPBasicAuth
 import mysql.connector
 from mysql.connector import Error
 from db import create_connection
 import bcrypt
+import os
+from dotenv import load_dotenv
 
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
+
+
+@auth.verify_password
+def verify_password(username, password):
+    api_key_encrypted = os.getenv("API_PASSWORD")
+    if username != os.getenv("API_USER"):
+        return False
+    #if password != bcrypt.checkpw(password, api_key_encrypted):
+    if password != os.getenv("REAL_PASSWORD"):
+        return False
+    return True
 
 
 # Route to handle POST requests and insert data into the 'users' table
 @app.route('/registerdata', methods=['POST'])
+@auth.login_required
 def insert_data():
     data = request.json
     if not data:
@@ -42,8 +58,8 @@ def insert_data():
         connection.close()
 
 
-
 @app.route('/data', methods=['GET'])
+@auth.login_required
 def get_data():
     connection = create_connection()
     if connection is None:
@@ -60,5 +76,8 @@ def get_data():
         cursor.close()
         connection.close()
 
+
 if __name__ == '__main__':
+    load_dotenv()
     app.run(debug=True)
+
