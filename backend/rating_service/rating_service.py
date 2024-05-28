@@ -7,40 +7,39 @@ import os
 
 app = Flask(__name__)
 
-@app.route('/registerdata', methods=['POST'])
+@app.route('/ratingdata', methods=['POST'])
 def insert_data():
     data = request.json
     if not data:
         return jsonify({"error": "No data provided in request body"}), 400
 
     # Check if all required fields are present in the request data
-    required_fields = ['given_name', 'surname', 'email', 'password']
+    required_fields = ['fk_user', 'fk_restaurant', 'stars', 'rating_description']
     for field in required_fields:
         if field not in data:
             return jsonify({"error": f"Field '{field}' is missing in request body"}), 400
 
-    # Hash the password using bcrypt
-    hashed_password = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
 
-    username = os.getenv("DB_USER_USER")
-    password = os.getenv("DB_USER_PASSWORD")
+
+    # Get database connection credentials from environment variables
+    username = os.getenv("DB_RATING_USER")
+    password = os.getenv("DB_RATING_PASSWORD")
     database = os.getenv("DB_NAME")
 
-    connection = create_connection(database,username,password)
+    # Create database connection
+    connection = create_connection(database, username, password)
     if connection is None:
         return jsonify({"error": "Failed to connect to the database"}), 500
 
     cursor = connection.cursor()
     try:
-        query = "INSERT INTO users (given_name, surname, email, password) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (data['given_name'], data['surname'], data['email'], hashed_password))
+        # Insert rating data into the database
+        query = "INSERT INTO ratings (fk_user, fk_restaurant, stars, rating_description, timestamp) VALUES (%s, %s, %s, %s, NOW())"
+        cursor.execute(query, (data['fk_user'], data['fk_restaurant'], data['stars'], data['rating_description']))
         connection.commit()
         return jsonify({"message": "Data inserted successfully"}), 201
-    except mysql.connector.IntegrityError as e:
-        if e.errno == 1062:  # MySQL error number for duplicate entry
-            return jsonify({"error": "User with this email already exists"}), 400
-        else:
-            return jsonify({"error": str(e)}), 500
+    except mysql.connector.Error as e:
+        return jsonify({"error": f"Failed to insert data: {str(e)}"}), 500
     finally:
         cursor.close()
         connection.close()

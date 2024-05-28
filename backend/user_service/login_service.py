@@ -10,7 +10,7 @@ def authenticate_user(email, password):
     # Connect to the database
     username = os.getenv("DB_USER_USER")
     dbpassword = os.getenv("DB_USER_PASSWORD")
-    database = "c1SADusers"
+    database = os.getenv("DB_NAME")
 
     connection = create_connection(database,username, dbpassword)
     if connection is None:
