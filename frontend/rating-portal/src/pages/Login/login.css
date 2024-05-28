@@ -45,3 +45,8 @@
 .login-options {
     margin-top: 20px;
 }
+
+.login-button:hover{
+    background-color: white;
+    color: #ff6347;
+}

@@ -40,3 +40,8 @@
     font-size: 16px;
     cursor: pointer;
 }
+
+.register-owner-button:hover{
+    background-color: white;
+    color: #ff6347;
+}
