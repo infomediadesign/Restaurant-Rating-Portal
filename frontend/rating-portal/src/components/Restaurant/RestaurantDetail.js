@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Rating from 'react-rating-stars-component';
 
-import littleindia from '../../images/littleindia.jpg';
-import naancurry from '../../images/naan&curry.png';
-import image from '../../images/image.png';
+import image1 from '../../images/image1.png';
+import image2 from '../../images/image2.jpg';
+import image3 from '../../images/image3.png';
+import image4 from '../../images/image4.png';
+import image5 from '../../images/image5.png';
+import image6 from '../../images/image6.jpg';
 import background from '../../images/background.jpg';
 
 const sampleRestaurants = [
@@ -13,7 +16,7 @@ const sampleRestaurants = [
         name: 'Little India',
         location: 'U1, Mannheim',
         rating: 4.5,
-        image: littleindia,
+        image: image1,
         openingHours: 'Monday-Sunday: 11:00 AM - 10:00 PM',
         reviews: [
             { id: 1, user: 'John Doe', rating: 4, comment: 'Great food and service!' },
@@ -25,7 +28,7 @@ const sampleRestaurants = [
         name: 'Naan&Curry',
         location: 'S2, Mannheim',
         rating: 4.2,
-        image: naancurry,
+        image: image2,
         openingHours: 'Monday-Saturday: 12:00 PM - 9:00 PM',
         reviews: [
             { id: 1, user: 'Alice Johnson', rating: 4, comment: 'Delicious food, but service could be faster.' },
@@ -36,7 +39,7 @@ const sampleRestaurants = [
         name: 'Raja Rani',
         location: 'Heidelberg',
         rating: 4.8,
-        image: image,
+        image: image3,
         openingHours: 'Tuesday-Sunday: 5:00 PM - 11:00 PM',
         reviews: [],
     },
@@ -45,7 +48,7 @@ const sampleRestaurants = [
         name: 'Spice Villa',
         location: 'Frankfurt',
         rating: 4.7,
-        image: image,
+        image: image4,
         openingHours: 'Monday-Sunday: 12:00 PM - 11:00 PM',
         reviews: [
             { id: 1, user: 'Tom Hanks', rating: 5, comment: 'Amazing ambiance and food!' },
@@ -56,7 +59,7 @@ const sampleRestaurants = [
         name: 'Curry House',
         location: 'Berlin',
         rating: 4.3,
-        image: image,
+        image: image5,
         openingHours: 'Monday-Friday: 1:00 PM - 10:00 PM',
         reviews: [
             { id: 1, user: 'Sandra Bullock', rating: 4, comment: 'Good food, decent service.' },
@@ -67,7 +70,7 @@ const sampleRestaurants = [
         name: 'Tandoori Palace',
         location: 'Hamburg',
         rating: 4.3,
-        image: image,
+        image: image6,
         openingHours: 'Monday-Friday: 1:00 PM - 10:00 PM',
         reviews: [
             { id: 1, user: 'Leonardo Dcaprio', rating: 5, comment: 'Good food, decent service.' },
