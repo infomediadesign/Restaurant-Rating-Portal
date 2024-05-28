@@ -25,14 +25,14 @@ def verify_password(username, password):
     return True
 
 
-@app.route('/registerdata', methods=['POST'])
+@app.route('/ratingdata', methods=['POST'])
 @auth.login_required
 def insert_data():
     data = request.json
     if not data:
         return jsonify({"error": "No data provided in request body"}), 400
 
-    register_url = "http://localhost:5001/registerdata"
+    register_url = "http://localhost:5001/ratingdata"
     try:
         response = requests.post(register_url, json=data)
         response.raise_for_status()  # Raise HTTPError for bad responses
@@ -41,25 +41,22 @@ def insert_data():
         return jsonify({"error": f"Failed to insert data: {e}"}), 500
 
 
-@app.route('/logindata', methods=['POST'])
+@app.route('/replydata', methods=['POST'])
 @auth.login_required
-def login_data():
-    # Extract data from the request
+def insert_reply_data():
     data = request.json
     if not data:
         return jsonify({"error": "No data provided in request body"}), 400
 
-    # Call the login service to handle login
-    login_url = "http://localhost:5002/logindata"
-    response = requests.post(login_url, json=data)
+    register_url = "http://localhost:5002/replydata"
+    try:
+        response = requests.post(register_url, json=data)
+        response.raise_for_status()  # Raise HTTPError for bad responses
+        return jsonify({"message": "Data inserted successfully"})
+    except requests.RequestException as e:
+        return jsonify({"error": f"Failed to insert data: {e}"}), 500
 
-    # Check the response from the login service
-    if response.status_code == 200:
-        return jsonify({"message": "User logged in successfully"})
-    elif response.status_code == 401:
-        return jsonify({"error": "Invalid username or password"}), 401
-    else:
-        return jsonify({"error": "Failed to log in"}), 500
+
 
 
 
@@ -67,4 +64,3 @@ def login_data():
 if __name__ == '__main__':
     load_dotenv()
     app.run(debug=True)
-
