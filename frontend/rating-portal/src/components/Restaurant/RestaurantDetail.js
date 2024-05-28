@@ -45,7 +45,7 @@ const sampleRestaurants = [
         name: 'Spice Villa',
         location: 'Frankfurt',
         rating: 4.7,
-        image: image, // Use the appropriate image for this restaurant
+        image: image,
         openingHours: 'Monday-Sunday: 12:00 PM - 11:00 PM',
         reviews: [
             { id: 1, user: 'Tom Hanks', rating: 5, comment: 'Amazing ambiance and food!' },
@@ -56,10 +56,21 @@ const sampleRestaurants = [
         name: 'Curry House',
         location: 'Berlin',
         rating: 4.3,
-        image: image, // Use the appropriate image for this restaurant
+        image: image,
         openingHours: 'Monday-Friday: 1:00 PM - 10:00 PM',
         reviews: [
             { id: 1, user: 'Sandra Bullock', rating: 4, comment: 'Good food, decent service.' },
+        ],
+    },
+    {
+        id: 6,
+        name: 'Tandoori Palace',
+        location: 'Hamburg',
+        rating: 4.3,
+        image: image,
+        openingHours: 'Monday-Friday: 1:00 PM - 10:00 PM',
+        reviews: [
+            { id: 1, user: 'Leonardo Dcaprio', rating: 5, comment: 'Good food, decent service.' },
         ],
     },
 ];
