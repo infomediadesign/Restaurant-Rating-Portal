@@ -32,9 +32,9 @@ def insert_data():
     if not data:
         return jsonify({"error": "No data provided in request body"}), 400
 
-    register_url = "http://localhost:5001/ratingdata"
+    rating_url = "http://localhost:5001/ratingdata"
     try:
-        response = requests.post(register_url, json=data)
+        response = requests.post(rating_url, json=data)
         response.raise_for_status()  # Raise HTTPError for bad responses
         return jsonify({"message": "Data inserted successfully"})
     except requests.RequestException as e:
@@ -48,9 +48,9 @@ def insert_reply_data():
     if not data:
         return jsonify({"error": "No data provided in request body"}), 400
 
-    register_url = "http://localhost:5002/replydata"
+    reply_url = "http://localhost:5001/replydata"
     try:
-        response = requests.post(register_url, json=data)
+        response = requests.post(reply_url, json=data)
         response.raise_for_status()  # Raise HTTPError for bad responses
         return jsonify({"message": "Data inserted successfully"})
     except requests.RequestException as e:
