@@ -43,6 +43,13 @@ const sampleRestaurants = [
         rating: 4.3,
         image: image, // Use the appropriate image for this restaurant
     },
+    {
+        id: 6,
+        name: 'Tandoori Palace',
+        location: 'Hamburg',
+        rating: 4.6,
+        image: image, // Use the appropriate image for this restaurant
+    },
 ];
 
 const RestaurantList = () => {
