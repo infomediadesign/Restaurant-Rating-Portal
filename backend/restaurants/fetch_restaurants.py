@@ -24,7 +24,7 @@ def fetch_all_restaurants():
 
             for restaurant in restaurants:
                 restaurants_end_result.append(dict(zip(row_headers, restaurant)))
-            return json.dumps(restaurants_end_result, indent=4, separators=(',', ': ')), 200
+            return jsonify(restaurants_end_result), 200
         else:
             return jsonify({"error": "No restaurants found"}), 404
 

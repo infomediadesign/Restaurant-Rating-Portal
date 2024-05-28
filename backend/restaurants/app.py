@@ -12,6 +12,7 @@ import fetch_restaurants
 
 
 app = Flask(__name__)
+app.json.sort_keys = False
 auth = HTTPBasicAuth()
 
 @auth.verify_password
