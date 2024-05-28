@@ -17,7 +17,7 @@ const sampleRestaurants = [
         location: 'U1, Mannheim',
         rating: 4.5,
         image: image1,
-        openingHours: 'Monday-Sunday: 11:00 AM - 10:00 PM',
+        openingHours: 'Monday-Sunday: 11:00 AM - 22:00 PM',
         reviews: [
             { id: 1, user: 'John Doe', rating: 4, comment: 'Great food and service!' },
             { id: 2, user: 'Jane Smith', rating: 5, comment: 'Best Indian restaurant in town!' },
@@ -29,7 +29,7 @@ const sampleRestaurants = [
         location: 'S2, Mannheim',
         rating: 4.2,
         image: image2,
-        openingHours: 'Monday-Saturday: 12:00 PM - 9:00 PM',
+        openingHours: 'Monday-Saturday: 12:00 PM - 21:00 PM',
         reviews: [
             { id: 1, user: 'Alice Johnson', rating: 4, comment: 'Delicious food, but service could be faster.' },
         ],
@@ -40,7 +40,7 @@ const sampleRestaurants = [
         location: 'Heidelberg',
         rating: 4.8,
         image: image3,
-        openingHours: 'Tuesday-Sunday: 5:00 PM - 11:00 PM',
+        openingHours: 'Tuesday-Sunday: 17:00 PM - 23:00 PM',
         reviews: [],
     },
     {
@@ -49,7 +49,7 @@ const sampleRestaurants = [
         location: 'Frankfurt',
         rating: 4.7,
         image: image4,
-        openingHours: 'Monday-Sunday: 12:00 PM - 11:00 PM',
+        openingHours: 'Monday-Sunday: 12:00 PM - 23:00 PM',
         reviews: [
             { id: 1, user: 'Tom Hanks', rating: 5, comment: 'Amazing ambiance and food!' },
         ],
