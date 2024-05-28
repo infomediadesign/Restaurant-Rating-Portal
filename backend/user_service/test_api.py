@@ -58,3 +58,4 @@ def test_login_with_correct_credentials(client):
 
     # Assert the response contains the expected message
     assert response.json['message'] == 'User logged in successfully'
+
