@@ -62,10 +62,22 @@ def login_data():
         return jsonify({"error": "Failed to log in"}), 500
 
 
-
+def create_table_if_not_exist():
+    create_users_table_sql = ("CREATE TABLE IF NOT EXISTS `c1SADusers`.`users` ("
+                              "`pk_user` int NOT NULL AUTO_INCREMENT, "
+                              "`given_name` varchar(50) NOT NULL, "
+                              "`surname` varchar(50) NOT NULL,"
+                              "`password` varchar(255) NOT NULL,"
+                              "`email` varchar(255) NOT NULL UNIQUE,"
+                              "PRIMARY KEY (`pk_user`)"
+                              ")")
+    connection = create_connection()
+    cursor = connection.cursor()
+    cursor.execute(create_users_table_sql)
 
 
 if __name__ == '__main__':
     load_dotenv()
+    create_table_if_not_exist()
     app.run(debug=True)
 
