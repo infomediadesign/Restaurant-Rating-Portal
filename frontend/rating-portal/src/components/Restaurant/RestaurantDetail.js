@@ -60,7 +60,7 @@ const sampleRestaurants = [
         location: 'Berlin',
         rating: 4.3,
         image: image5,
-        openingHours: 'Monday-Friday: 1:00 PM - 10:00 PM',
+        openingHours: 'Monday-Friday: 13:00 PM - 22:00 PM',
         reviews: [
             { id: 1, user: 'Sandra Bullock', rating: 4, comment: 'Good food, decent service.' },
         ],
@@ -71,7 +71,7 @@ const sampleRestaurants = [
         location: 'Hamburg',
         rating: 4.3,
         image: image6,
-        openingHours: 'Monday-Friday: 1:00 PM - 10:00 PM',
+        openingHours: 'Monday-Friday: 14:00 PM - 23:00 PM',
         reviews: [
             { id: 1, user: 'Leonardo Dcaprio', rating: 5, comment: 'Good food, decent service.' },
         ],
