@@ -3,6 +3,7 @@ from mysql.connector import Error
 from db import create_connection
 import bcrypt
 import mysql.connector
+import os
 
 app = Flask(__name__)
 
@@ -21,7 +22,12 @@ def insert_data():
     # Hash the password using bcrypt
     hashed_password = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
 
-    connection = create_connection()
+    username = os.getenv("DB_USER_USER")
+    password = os.getenv("DB_USER_PASSWORD")
+    database = "c1SADusers"
+
+
+    connection = create_connection(database,username,password)
     if connection is None:
         return jsonify({"error": "Failed to connect to the database"}), 500
 

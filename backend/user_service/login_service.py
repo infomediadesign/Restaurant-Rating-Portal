@@ -2,14 +2,19 @@ import bcrypt
 
 from flask import Flask, request, jsonify
 from db import create_connection
+import os
 
 app = Flask(__name__)
 
 def authenticate_user(email, password):
     # Connect to the database
-    connection = create_connection()
+    username = os.getenv("DB_USER_USER")
+    dbpassword = os.getenv("DB_USER_PASSWORD")
+    database = "c1SADusers"
+
+    connection = create_connection(database,username, dbpassword)
     if connection is None:
-        return None
+        return jsonify({"error": "Failed to connect to the database"}), 500
 
     cursor = connection.cursor()
     try:
