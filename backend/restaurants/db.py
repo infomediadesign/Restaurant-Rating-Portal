@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+
 def create_connection():
     try:
         connection = mysql.connector.connect(
@@ -18,6 +19,7 @@ def create_connection():
     except Error as e:
         print(f"Error: {e}")
         return None
+
 
 def create_restaurant_table_if_not_exist():
     sql_create_restaurant_table = ("CREATE TABLE IF NOT EXISTS `c1SADrestaurants`.`restaurants`("
