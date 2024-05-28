@@ -6,3 +6,8 @@ backend/restaurants/.env
 
 frontend/rating-portal/src/images/OTOMAT ___ GENT.jpeg
 
+frontend/rating-portal/src/components/Restaurant/RestaurantCard.js
+frontend/rating-portal/src/images/homepageimg.jpg
+frontend/rating-portal/src/images/image.png
+frontend/rating-portal/src/images/littleindia.jpg
+frontend/rating-portal/src/images/naan&curry.png
