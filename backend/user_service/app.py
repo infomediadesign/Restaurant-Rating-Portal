@@ -5,6 +5,7 @@ from mysql.connector import Error
 from db import create_connection
 import bcrypt
 import os
+import requests
 from dotenv import load_dotenv
 
 
@@ -24,27 +25,20 @@ def verify_password(username, password):
     return True
 
 
-# Route to handle POST requests and insert data into the 'users' table
 @app.route('/registerdata', methods=['POST'])
 @auth.login_required
 def insert_data():
-    # Extract data from the request
     data = request.json
     if not data:
         return jsonify({"error": "No data provided in request body"}), 400
 
-    # Call the register service to handle data insertion
-    register_url = "http://localhost:5001/registerdata"  # Adjust the URL as needed
-    response = requests.post(register_url, json=data)
-
-    # Check the response from the register service
-    if response.status_code == 200:
+    register_url = "http://localhost:5001/registerdata"
+    try:
+        response = requests.post(register_url, json=data)
+        response.raise_for_status()  # Raise HTTPError for bad responses
         return jsonify({"message": "Data inserted successfully"})
-    elif response.status_code == 400:
-        return jsonify({"error": "Failed to insert data: Bad request"}), 400
-    else:
-        return jsonify({"error": "Failed to insert data"}), 500
-
+    except requests.RequestException as e:
+        return jsonify({"error": f"Failed to insert data: {e}"}), 500
 
 
 @app.route('/logindata', methods=['POST'])
