@@ -22,36 +22,57 @@ def create_connection():
 
 
 def create_restaurant_table_if_not_exist():
-    sql_create_restaurant_table = ("CREATE TABLE IF NOT EXISTS `c1SADrestaurants`.`restaurants`("
-                                   "`pk_restaurant` int NOT NULL AUTO_INCREMENT, "
-                                   "`fk_owner` int NOT NULL, "
-                                   "`name` varchar(50) NOT NULL, "
-                                   "`genre` varchar(50) NOT NULL, "
-                                   "`house_number` int(4) NOT NULL, "
-                                   "`street_name` varchar(50) NOT NULL, "
-                                   "`city` varchar(50) NOT NULL, "
-                                   "`state` varchar(50) NOT NULL, "
-                                   "`country` varchar(50) NOT NULL, "
-                                   "`zip_code` int(10) NOT NULL, "
-                                   "`licence` varchar(50) NOT NULL, "
-                                   "`verified` BOOLEAN NOT NULL DEFAULT FALSE, "
-                                   "PRIMARY KEY (`pk_restaurant`)"
-                                   ")")
+    sql = ("CREATE TABLE IF NOT EXISTS `c1SADrestaurants`.`restaurants`("
+           "`pk_restaurant` int NOT NULL AUTO_INCREMENT, "
+           "`fk_owner` int NOT NULL, "
+           "`name` varchar(50) NOT NULL, "
+           "`genre` varchar(50) NOT NULL, "
+           "`house_number` int(4) NOT NULL, "
+           "`street_name` varchar(50) NOT NULL, "
+           "`city` varchar(50) NOT NULL, "
+           "`state` varchar(50) NOT NULL, "
+           "`country` varchar(50) NOT NULL, "
+           "`zip_code` int(10) NOT NULL, "
+           "`licence` varchar(50) NOT NULL, "
+           "`verified` BOOLEAN NOT NULL DEFAULT FALSE, "
+           "PRIMARY KEY (`pk_restaurant`)"
+           ")")
 
     connection = create_connection()
     cursor = connection.cursor()
-    cursor.execute(sql_create_restaurant_table)
+    cursor.execute(sql)
     cursor.close()
     connection.close()
 
 
 def create_pictures_table_if_not_exist():
-    sql = ("CREATE TABLE `c1SADrestaurants`.`pisctures` ( "
-           "`pk_picture` INT(10) NOT NULL AUTO_INCREMENT , "
-           "`fk_restaurant` INT(10) NOT NULL , "
-           "`url` VARCHAR(255) NOT NULL , "
+    sql = ("CREATE TABLE IF NOT EXISTS `c1SADrestaurants`.`pictures` ( "
+           "`pk_picture` INT(10) NOT NULL AUTO_INCREMENT, "
+           "`fk_restaurant` INT(10) NOT NULL, "
+           "`url` VARCHAR(255) NOT NULL, "
            "PRIMARY KEY (`pk_picture`), "
-           "FOREIGN KEY (`fk_restaurant`) REFERENCES `restaurants`(`pk_restaurant`) ON DELETE CASCADE ON UPDATE CASCADE"
+           "FOREIGN KEY (`fk_restaurant`) "
+           "REFERENCES `restaurants`(`pk_restaurant`) "
+           "ON DELETE CASCADE ON UPDATE CASCADE"
+           ")")
+    connection = create_connection()
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    cursor.close()
+    connection.close()
+
+
+def create_opening_hours_table_if_not_exist():
+    sql = ("CREATE TABLE IF NOT EXISTS `c1SADrestaurants`.`opening_hours` ( "
+           "`pk_opening_hour` INT(10) NOT NULL AUTO_INCREMENT, "
+           "`fk_restaurant` INT(10) NOT NULL, "
+           "`week_day` INT(1) NOT NULL, "
+           "`open_time` time NOT NULL, "
+           "`close_time` time NOT NULL, "
+           "PRIMARY KEY (`pk_opening_hour`), "
+           "FOREIGN KEY (`fk_restaurant`) "
+           "REFERENCES `restaurants`(`pk_restaurant`) "
+           "ON DELETE CASCADE ON UPDATE CASCADE"
            ")")
     connection = create_connection()
     cursor = connection.cursor()
@@ -63,3 +84,4 @@ def create_pictures_table_if_not_exist():
 def create_tables():
     create_restaurant_table_if_not_exist()
     create_pictures_table_if_not_exist()
+    create_opening_hours_table_if_not_exist()
