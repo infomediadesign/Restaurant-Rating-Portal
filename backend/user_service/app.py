@@ -50,7 +50,7 @@ def login_data():
         return jsonify({"error": "No data provided in request body"}), 400
 
     # Call the login service to handle login
-    login_url = "http://localhost:5002/logindata"
+    login_url = "http://localhost:5001/logindata"
     response = requests.post(login_url, json=data)
 
     # Check the response from the login service
@@ -60,6 +60,29 @@ def login_data():
         return jsonify({"error": "Invalid username or password"}), 401
     else:
         return jsonify({"error": "Failed to log in"}), 500
+
+
+@app.route('/userdata', methods=['POST'])
+@auth.login_required
+def user_data():
+    # Extract data from the request
+    data = request.json
+    if not data:
+        return jsonify({"error": "No data provided in request body"}), 400
+
+    # Call the login service to handle login
+    user_url = "http://localhost:5001/userdata"
+    response = requests.post(user_url, json=data)
+
+    # Check the response from the login service
+    if response.status_code == 200:
+        # If the login service returns user data, return it
+        user_data = response.json()  # Assuming the user data is returned as JSON
+        return jsonify(user_data)
+    elif response.status_code == 401:
+        return jsonify({"error": "Unauthorized"}), 401  # Fix for unauthorized error
+    else:
+        return jsonify({"error": "Failed to retrieve user data"}), 500  # Fix for generic error
 
 
 
