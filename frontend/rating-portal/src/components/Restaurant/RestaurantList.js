@@ -1,6 +1,7 @@
 import React from 'react';
 import RestaurantCard from './RestaurantCard';
 import { useNavigate } from 'react-router-dom';
+import './RestaurantList.css';
 
 import image1 from '../../images/image1.png';
 import image2 from '../../images/image2.jpg';
@@ -8,7 +9,6 @@ import image3 from '../../images/image3.png';
 import image4 from '../../images/image4.png';
 import image5 from '../../images/image5.png';
 import image6 from '../../images/image6.jpg';
-import background from '../../images/background.jpg';
 
 const sampleRestaurants = [
     {
@@ -63,46 +63,13 @@ const RestaurantList = () => {
     };
 
     return (
-        <div
-            style={{
-                position: 'relative',
-                padding: '20px',
-                borderRadius: '10px',
-            }}
-        >
-            <div
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    zIndex: -1,
-                    background: `url(${background}) no-repeat center center fixed`,
-                    backgroundSize: 'cover',
-                    filter: 'brightness(0.5)',
-                }}
-            ></div>
-
-            <div
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                    gap: '30px',
-                }}
-            >
+        <div className="restaurant-list">
+            <div className="restaurant-list-background"></div>
+            <div className="restaurant-list-grid">
                 {sampleRestaurants.map((restaurant) => (
                     <div
                         key={restaurant.id}
-                        style={{
-                            cursor: 'pointer',
-                            borderRadius: '10px',
-                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                            padding: '20px',
-                            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                            overflow: 'hidden',
-                        }}
+                        className="restaurant-list-item"
                         onClick={() => handleRestaurantClick(restaurant.id)}
                         onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
                         onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
@@ -114,5 +81,6 @@ const RestaurantList = () => {
         </div>
     );
 };
+
 
 export default RestaurantList;
