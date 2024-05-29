@@ -5,9 +5,6 @@ from mysql.connector import Error
 from db import create_connection
 
 
-pictures_of_restaurants = []
-
-
 def fetch_all(data, verified_only=False):
     name_city = None
     genres = None
@@ -105,5 +102,3 @@ def fetch_by_id(restaurant_id):
     finally:
         cursor.close()
         connection.close()
-
-

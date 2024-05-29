@@ -9,6 +9,7 @@ import requests
 from dotenv import load_dotenv
 
 import fetch_restaurants
+import pictures
 
 
 app = Flask(__name__)
@@ -57,6 +58,29 @@ def fetch_by_id():
         return jsonify({'message': 'Invalid restaurant ID'}), 400
 
     return fetch_restaurants.fetch_by_id(restaurant_id)
+
+
+@app.route('/pictures/delete', methods=['POST'])
+@auth.login_required
+def delete_picture():
+    data = request.get_json()
+
+    if not data or 'pk_picture' not in data:
+        return jsonify({'message': 'No picture data provided'}), 400
+
+    try:
+        picture_id = int(data['pk_picture'])
+    except ValueError:
+        return jsonify({'message': 'Picture ID must be an integer'}), 400
+
+    return pictures.delete(picture_id)
+
+
+@app.route('/pictures/upload', methods=['POST'])
+@auth.login_required
+def upload_picture():
+    data = request.get_json()
+    return pictures.upload(data)
 
 
 if __name__ == '__main__':

@@ -49,7 +49,7 @@ def create_pictures_table_if_not_exist():
     sql = ("CREATE TABLE IF NOT EXISTS `c1SADrestaurants`.`pictures` ( "
            "`pk_picture` INT(10) NOT NULL AUTO_INCREMENT, "
            "`fk_restaurant` INT(10) NOT NULL, "
-           "`url` VARCHAR(255) NOT NULL, "
+           "`url` VARCHAR(255) NOT NULL UNIQUE, "
            "PRIMARY KEY (`pk_picture`), "
            "FOREIGN KEY (`fk_restaurant`) "
            "REFERENCES `restaurants`(`pk_restaurant`) "
