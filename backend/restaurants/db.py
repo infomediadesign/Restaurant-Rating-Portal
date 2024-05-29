@@ -29,6 +29,7 @@ def create_restaurant_table_if_not_exist():
                                    "`genre` varchar(50) NOT NULL, "
                                    "`house_number` int(4) NOT NULL, "
                                    "`street_name` varchar(50) NOT NULL, "
+                                   "`city` varchar(50) NOT NULL, "
                                    "`state` varchar(50) NOT NULL, "
                                    "`country` varchar(50) NOT NULL, "
                                    "`zip_code` int(10) NOT NULL, "

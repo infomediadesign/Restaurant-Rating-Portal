@@ -27,27 +27,28 @@ def verify_password(username, password):
     return True
 
 
-@app.route('/restaurants', methods=['GET'])
+@app.route('/restaurants', methods=['POST'])
 @auth.login_required
 def fetch_all_restaurants():
-    return fetch_restaurants.fetch_all_restaurants()
+    data = request.get_json()
+
+    return fetch_restaurants.fetch_all_restaurants(data)
+
 
 @app.route('/restaurant_by_id', methods=['POST'])
 @auth.login_required
 def fetch_restaurant_by_id():
-    return None
+    data = request.get_json()
 
+    if not data or 'pk_restaurant' not in data:
+        return jsonify({'message': 'No restaurant data provided'}), 400
 
-@app.route('/restaurants_in_city', methods=['POST'])
-@auth.login_required
-def fetch_restaurant_in_city():
-    return None
+    try:
+        restaurant_id = int(data['pk_restaurant'])
+    except ValueError:
+        return jsonify({'message': 'Invalid restaurant ID'}), 400
 
-
-@app.route('/restaurants_in_city_filter', methods=['POST'])
-@auth.login_required
-def fetch_restaurant_in_city_filter():
-    return None
+    fetch_restaurants.fetch_restaurant_by_id()
 
 
 if __name__ == '__main__':
