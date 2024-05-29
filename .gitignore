@@ -12,3 +12,5 @@ frontend/rating-portal/src/images/image.png
 frontend/rating-portal/src/images/littleindia.jpg
 frontend/rating-portal/src/images/naan&curry.png
 /backend/user_service/__pycache__
+/backend/restaurants/__pycache__
+/backend/user_service/__pycache__
