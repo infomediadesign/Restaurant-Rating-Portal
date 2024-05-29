@@ -1,6 +1,7 @@
     import React, { useState } from 'react';
     import { useParams } from 'react-router-dom';
     import Rating from 'react-rating-stars-component';
+    import './RestaurantDetail.css';
 
     import image1 from '../../images/image1.png';
     import image2 from '../../images/image2.jpg';
@@ -9,7 +10,7 @@
     import image5 from '../../images/image5.png';
     import image6 from '../../images/image6.jpg';
     import background from '../../images/background.jpg';
-    import './RestaurantDetail.css';
+    
 
     const sampleRestaurants = [
         {
@@ -103,14 +104,17 @@
             return <div style={{ padding: '20px', textAlign: 'center' }}>Restaurant not found</div>;
         }
 
-     return (
+    return (
         <div className="restaurant-detail-container">
+            {/* Background Image */}
             <div className="restaurant-detail-background" style={{ backgroundImage: `url(${background})` }}></div>
 
+            {/* Restaurant Image */}
             <div className="restaurant-image-container">
                 <img src={restaurant.image} alt={restaurant.name} className="restaurant-image" />
             </div>
 
+            {/* Restaurant Information */}
             <div className="restaurant-info-container">
                 <h1 className="restaurant-name">{restaurant.name}</h1>
                 <p className="restaurant-description">{restaurant.description}</p>
@@ -122,6 +126,7 @@
                 </div>
             </div>
 
+            {/* User Reviews */}
             <div className="user-reviews-container">
                 <h3 className="user-reviews-title">User Reviews</h3>
                 {restaurant.reviews.length === 0 ? (
@@ -137,6 +142,7 @@
                 )}
             </div>
 
+            {/* Review Form */}
             <div className="review-form-container">
                 <h3 className="review-form-title">Write a Review</h3>
                 <form onSubmit={handleSubmitReview}>
