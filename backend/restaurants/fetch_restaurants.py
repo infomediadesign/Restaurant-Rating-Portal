@@ -5,7 +5,7 @@ from mysql.connector import Error
 from db import create_connection
 
 
-def fetch_all_restaurants(data):
+def fetch_all(data, verified_only=False):
     name_city = None
     genres = None
 
@@ -38,8 +38,13 @@ def fetch_all_restaurants(data):
             if name_city is not None:
                 query += " AND"
 
-            query += "WHERE `genre` in {}".format(genres_str)
+            query += " WHERE `genre` in {}".format(genres_str)
 
+        if verified_only is True:
+            if genres is not None or name_city is not None:
+                query += "AND"
+
+            query += " AND `verified`= '1'"
 
         cursor.execute(query)
         row_headers = [x[0] for x in cursor.description]
@@ -62,6 +67,6 @@ def fetch_all_restaurants(data):
         connection.close()
 
 
-def fetch_restaurant_by_id(id):
+def fetch_by_id(id):
     return None
 

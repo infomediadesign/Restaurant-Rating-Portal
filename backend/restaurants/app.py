@@ -27,17 +27,25 @@ def verify_password(username, password):
     return True
 
 
-@app.route('/restaurants', methods=['POST'])
+@app.route('/fetch_all', methods=['POST'])
 @auth.login_required
-def fetch_all_restaurants():
+def fetch_all():
     data = request.get_json()
 
-    return fetch_restaurants.fetch_all_restaurants(data)
+    return fetch_restaurants.fetch_all(data)
 
 
-@app.route('/restaurant_by_id', methods=['POST'])
+@app.route('/fetch_verified', methods=['POST'])
 @auth.login_required
-def fetch_restaurant_by_id():
+def fetch_verified():
+    data = request.get_json()
+
+    return fetch_restaurants.fetch_all(data, true)
+
+
+@app.route('/fetch_by_id', methods=['POST'])
+@auth.login_required
+def fetch_by_id():
     data = request.get_json()
 
     if not data or 'pk_restaurant' not in data:
@@ -48,7 +56,7 @@ def fetch_restaurant_by_id():
     except ValueError:
         return jsonify({'message': 'Invalid restaurant ID'}), 400
 
-    fetch_restaurants.fetch_restaurant_by_id()
+    fetch_restaurants.fetch_by_id()
 
 
 if __name__ == '__main__':
