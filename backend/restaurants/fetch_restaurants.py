@@ -6,18 +6,14 @@ from db import create_connection
 
 
 def fetch_all_restaurants(data):
-    name = None
+    name_city = None
     genres = None
-    city = None
 
-    if 'name' in data:
-        name = data['name']
+    if 'name_city' in data:
+        name_city = data['name_city']
 
     if 'genres' in data:
         genres = data['genres']
-
-    if 'city' in data:
-        city = data['city']
 
     connection = create_connection()
 
@@ -29,8 +25,8 @@ def fetch_all_restaurants(data):
     try:
         query = "SELECT * FROM `restaurants`"
 
-        if name is not None:
-            query += " WHERE `name` LIKE '{}'".format(name)
+        if name_city is not None:
+            query += " WHERE (`name` LIKE '%{}%' OR `city` LIKE '%{}%')".format(name_city, name_city)
 
         if genres is not None:
             genres_str = "("
@@ -39,18 +35,11 @@ def fetch_all_restaurants(data):
             genres_str = genres_str[:-1]
             genres_str += ")"
 
-            if name is not None:
+            if name_city is not None:
                 query += " AND"
 
             query += "WHERE `genre` in {}".format(genres_str)
 
-        if city is not None:
-            if name is not None or genres is not None:
-                query += " AND"
-            else:
-                query += " WHERE"
-
-            query += " `city` LIKE '{}'".format(city)
 
         cursor.execute(query)
         row_headers = [x[0] for x in cursor.description]

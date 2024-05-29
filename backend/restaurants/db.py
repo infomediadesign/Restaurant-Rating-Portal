@@ -41,9 +41,25 @@ def create_restaurant_table_if_not_exist():
     connection = create_connection()
     cursor = connection.cursor()
     cursor.execute(sql_create_restaurant_table)
-    print("restaurant table created")
+    cursor.close()
+    connection.close()
+
+
+def create_pictures_table_if_not_exist():
+    sql = ("CREATE TABLE `c1SADrestaurants`.`pisctures` ( "
+           "`pk_picture` INT(10) NOT NULL AUTO_INCREMENT , "
+           "`fk_restaurant` INT(10) NOT NULL , "
+           "`url` VARCHAR(255) NOT NULL , "
+           "PRIMARY KEY (`pk_picture`), "
+           "FOREIGN KEY (`fk_restaurant`) REFERENCES `restaurants`(`pk_restaurant`) ON DELETE CASCADE ON UPDATE CASCADE"
+           ")")
+    connection = create_connection()
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    cursor.close()
+    connection.close()
 
 
 def create_tables():
     create_restaurant_table_if_not_exist()
-    print("tables created")
+    create_pictures_table_if_not_exist()
