@@ -5,6 +5,9 @@ from mysql.connector import Error
 from db import create_connection
 
 
+pictures_of_restaurants = []
+
+
 def fetch_all(data, verified_only=False):
     name_city = None
     genres = None
@@ -23,7 +26,8 @@ def fetch_all(data, verified_only=False):
     cursor = connection.cursor()
 
     try:
-        query = "SELECT * FROM `restaurants`"
+        query = ("SELECT `restaurants`.*, GROUP_CONCAT(`pictures`.`url`) AS 'images' FROM `restaurants`"
+                 "LEFT JOIN `pictures` ON `pictures`.`fk_restaurant` = `pk_restaurant`")
 
         if name_city is not None:
             query += " WHERE (`name` LIKE '%{}%' OR `city` LIKE '%{}%')".format(name_city, name_city)
@@ -46,6 +50,7 @@ def fetch_all(data, verified_only=False):
 
             query += " AND `verified`= '1'"
 
+        query += " GROUP BY `restaurants`.`pk_restaurant`"
         cursor.execute(query)
         row_headers = [x[0] for x in cursor.description]
         restaurants = cursor.fetchall()
@@ -54,7 +59,11 @@ def fetch_all(data, verified_only=False):
             restaurants_end_result = []
 
             for restaurant in restaurants:
-                restaurants_end_result.append(dict(zip(row_headers, restaurant)))
+                restaurant_result = dict(zip(row_headers, restaurant))
+                if restaurant_result["images"] is not None:
+                    restaurant_result["images"] = restaurant_result["images"].split(",")
+                restaurants_end_result.append(restaurant_result)
+
             return jsonify(restaurants_end_result), 200
         else:
             return jsonify({"error": "No restaurants found"}), 404
@@ -67,6 +76,34 @@ def fetch_all(data, verified_only=False):
         connection.close()
 
 
-def fetch_by_id(id):
-    return None
+def fetch_by_id(restaurant_id):
+
+    connection = create_connection()
+
+    if connection is None:
+        return jsonify({"error": "Failed to connect to the database"}), 500
+
+    cursor = connection.cursor()
+    try:
+        query = ("SELECT `restaurants`.*, GROUP_CONCAT(`pictures`.`url`) AS 'images' FROM `restaurants` "
+                 "LEFT JOIN `pictures` ON `pictures`.`fk_restaurant` = `pk_restaurant` "
+                 "WHERE `pk_restaurant` = %s")
+
+        cursor.execute(query, (restaurant_id,))
+        row_headers = [x[0] for x in cursor.description]
+        restaurant = cursor.fetchone()
+
+        if restaurant:
+            restaurant_result = dict(zip(row_headers, restaurant))
+            if restaurant_result["images"] is not None:
+                restaurant_result["images"] = restaurant_result["images"].split(",")
+
+            return jsonify(restaurant_result), 200
+    except Error as e:
+        return jsonify({"error": "Failed to fetch restaurants - " + str(e)}), 500
+
+    finally:
+        cursor.close()
+        connection.close()
+
 

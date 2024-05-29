@@ -56,7 +56,7 @@ def fetch_by_id():
     except ValueError:
         return jsonify({'message': 'Invalid restaurant ID'}), 400
 
-    fetch_restaurants.fetch_by_id()
+    return fetch_restaurants.fetch_by_id(restaurant_id)
 
 
 if __name__ == '__main__':
