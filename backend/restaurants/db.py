@@ -26,7 +26,7 @@ def create_restaurant_table_if_not_exist():
            "`pk_restaurant` int NOT NULL AUTO_INCREMENT, "
            "`fk_owner` int NOT NULL, "
            "`name` varchar(50) NOT NULL, "
-           "`genre` varchar(50) NOT NULL, "
+           "`genre` varchar(255) NOT NULL, "
            "`house_number` int(4) NOT NULL, "
            "`street_name` varchar(50) NOT NULL, "
            "`city` varchar(50) NOT NULL, "

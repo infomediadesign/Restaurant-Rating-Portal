@@ -19,7 +19,7 @@ def delete(picture_id):
         connection.commit()
         return jsonify({"message": "Picture deleted successfully"}), 200
     except Error as e:
-        return jsonify({"error": "Failed to fetch restaurants - " + str(e)}), 500
+        return jsonify({"error": "Failed to delete picture - " + str(e)}), 500
 
     finally:
         cursor.close()

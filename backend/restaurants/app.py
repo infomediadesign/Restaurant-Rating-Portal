@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 import fetch_restaurants
 import pictures
+import crud
 
 
 app = Flask(__name__)
@@ -58,6 +59,49 @@ def fetch_by_id():
         return jsonify({'message': 'Invalid restaurant ID'}), 400
 
     return fetch_restaurants.fetch_by_id(restaurant_id)
+
+
+@app.route('/create', methods=['POST'])
+@auth.login_required
+def create():
+    data = request.get_json()
+    return crud.create(data)
+
+
+@app.route('/update', methods=['POST'])
+@auth.login_required
+def update():
+    data = request.get_json()
+    return crud.update(data)
+
+
+@app.route('/verify', methods=['POST'])
+@auth.login_required
+def verify():
+    data = request.get_json()
+    if not data or 'pk_restaurant' not in data:
+        return jsonify({'message': 'No restaurant data provided'}), 400
+    try:
+        restaurant_id = int(data['pk_restaurant'])
+    except ValueError as e:
+        return jsonify({'message': 'Invalid restaurant ID'}), 400
+    return crud.verify(restaurant_id)
+
+
+@app.route('/delete', methods=['POST'])
+@auth.login_required
+def delete():
+    data = request.get_json()
+
+    if not data or 'pk_restaurant' not in data:
+        return jsonify({'message': 'No restaurant data provided'}), 400
+
+    try:
+        restaurant_id = int(data['pk_restaurant'])
+    except ValueError:
+        return jsonify({'message': 'Restaurant ID must be an integer'}), 400
+
+    return crud.delete(restaurant_id)
 
 
 @app.route('/pictures/delete', methods=['POST'])
