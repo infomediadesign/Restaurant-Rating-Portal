@@ -5,12 +5,12 @@ from mysql.connector import Error
 from db import create_connection, create_tables
 import bcrypt
 import os
-import requests
 from dotenv import load_dotenv
 
 import fetch_restaurants
 import pictures
 import crud
+import opening_hours
 
 
 app = Flask(__name__)
@@ -141,6 +141,67 @@ def delete_picture():
 def upload_picture():
     data = request.get_json()
     return pictures.upload(data)
+
+
+@app.route('/opening_hours/add', methods=['POST'])
+@auth.login_required
+def opening_hours_add():
+    data = request.get_json()
+    return opening_hours.add(data)
+
+
+@app.route('/opening_hours/update', methods=['POST'])
+@auth.login_required
+def opening_hours_update():
+    data = request.get_json()
+    return opening_hours.update(data)
+
+
+@app.route('/opening_hours/delete', methods=['POST'])
+@auth.login_required
+def opening_hours_delete():
+    data = request.get_json()
+    if data is None:
+        return jsonify({'message': 'No data provided'}), 400
+    if 'pk_opening_hours' not in data:
+        return jsonify({'message': 'No opening hours data provided'}), 400
+    try:
+        opening_hours_id = int(data['pk_opening_hours'])
+    except ValueError:
+        return jsonify({'message': 'Opening hours ID must be an integer'}), 400
+    return opening_hours.delete(data)
+
+
+@app.route('/opening_hours/fetch_by_id', methods=['POST'])
+@auth.login_required
+def opening_hours_fetch_by_id():
+    data = request.get_json()
+    if data is None:
+        return jsonify({'message': 'No data provided'}), 400
+    if 'pk_opening_hour' not in data:
+        return jsonify({'message': 'No opening hours data provided'}), 400
+    try:
+        opening_hours_id = int(data['pk_opening_hour'])
+    except ValueError:
+        return jsonify({'message': 'Opening hours ID must be an integer'}), 400
+
+    return opening_hours.fetch_by_id(opening_hours_id)
+
+
+@app.route('/opening_hours/fetch_all_by_restaurant_id', methods=['POST'])
+@auth.login_required
+def opening_hours_fetch_all_by_restaurant_id():
+    data = request.get_json()
+    if data is None:
+        return jsonify({'message': 'No data provided'}), 400
+    if 'fk_restaurant' not in data:
+        return jsonify({'message': 'No restaurant data provided'}), 400
+    try:
+        fk_restaurant = int(data['fk_restaurant'])
+    except ValueError:
+        return jsonify({'message': 'Restaurant ID must be an integer'}), 400
+
+    return opening_hours.fetch_all_by_restaurant_id(fk_restaurant)
 
 
 if __name__ == '__main__':
