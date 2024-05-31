@@ -22,7 +22,7 @@ def test_register_new_user(client):
     register_data = {
         'given_name': 'J',
         'surname': 'Doe',
-        'email': 'new_user@example.com',
+        'email': 'new_usr@example.com',
         'password': 'new_password'
     }
 
@@ -43,7 +43,7 @@ def test_register_new_user(client):
 def test_login_with_correct_credentials(client):
     # Prepare login data with correct credentials
     login_data = {
-        'email': 'new_user@example.com',
+        'email': 'new_usr@example.com',
         'password': 'new_password'
     }
 
@@ -64,7 +64,7 @@ def test_login_with_correct_credentials(client):
 def test_get_user_data(client):
     # Prepare user data with a valid user ID
     user_data = {
-        'pk_user': 1  # Assuming 1 is a valid user ID
+        'pk_user': 4  # Assuming 1 is a valid user ID
     }
 
     username = os.getenv("API_USER")
@@ -85,9 +85,11 @@ def test_get_user_data(client):
 
 
 def test_fetch_all_users(client):
-    # Make a GET request to fetch all users
-    response = client.get('fetch_all')
+    username = os.getenv("API_USER")
+    password = os.getenv("API_DECRYPTED_PASSWORD")
 
+    # Make a POST request to update user data
+    response = client.get('/fetch_all',  headers=get_auth_header(username, password))
     # Assert the response status code is 200
     assert response.status_code == 200
 
@@ -109,8 +111,8 @@ def test_fetch_all_users(client):
 def test_update_user_data(client):
     # Prepare update data with a valid user ID
     update_data = {
-        'pk_user': 1,  # Assuming 36 is a valid user ID
-        'given_name': 'Updat ',
+        'pk_user': 4,  # Assuming 36 is a valid user ID
+        'given_name': 'U ',
         'surname': 'Updated Surname',
         'email': 'updated_email@example.com',
         'password': 'new_password'
@@ -129,11 +131,10 @@ def test_update_user_data(client):
     # Assert the response contains the expected message
     assert response_data['message'] == 'User data updated successfully'
 
-
 def test_delete_user(client):
     # Prepare data with a valid user ID to delete
     delete_data = {
-        'user_id': 1  # Assuming 36 is a valid user ID
+        'user_id': 4  # Assuming 36 is a valid user ID
     }
 
     username = os.getenv("API_USER")
@@ -147,5 +148,6 @@ def test_delete_user(client):
 
     # Assert the response contains the expected message
     assert response.json['message'] == 'User deleted successfully'
+
 
 

@@ -231,19 +231,21 @@ def delete_user(data):
             return {"error": "Failed to connect to the database"}, 500
 
         cursor = connection.cursor()
-        query = "DELETE FROM users WHERE pk_user = %s"
-        cursor.execute(query, (user_id,))
-        connection.commit()
 
-        query_update = "UPDATE users SET pk_user = pk_user - 1 WHERE pk_user > %s"
-        cursor.execute(query_update, (user_id,))
-        connection.commit()
+        # Check if the user exists
+        cursor.execute("SELECT 1 FROM users WHERE pk_user = %s", (user_id,))
+        if cursor.fetchone():
+            # Delete the user
+            cursor.execute("DELETE FROM users WHERE pk_user = %s", (user_id,))
+            connection.commit()
 
-        # Check if any rows were affected
-        if cursor.rowcount == 1:
+            # Update remaining users' pk_user
+            cursor.execute("UPDATE users SET pk_user = pk_user - 1 WHERE pk_user > %s", (user_id,))
+            connection.commit()
+
             return {"message": "User deleted successfully"}, 200
         else:
-            return {"error": "User not found or no changes made"}, 400
+            return {"error": "User not found"}, 404
     except Exception as e:
         return {"error": f"Failed to delete user: {str(e)}"}, 500
     finally:
