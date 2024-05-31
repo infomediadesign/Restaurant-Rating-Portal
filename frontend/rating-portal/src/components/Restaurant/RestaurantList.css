@@ -20,6 +20,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .restaurant-list-item {
@@ -30,4 +33,12 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    text-align: center;
+}
+
+.no-results {
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+    margin-top: 20px;
 }
