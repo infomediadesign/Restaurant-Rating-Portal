@@ -35,7 +35,7 @@ def insert_data():
         query = "INSERT INTO users (given_name, surname, email, password) VALUES (%s, %s, %s, %s)"
         cursor.execute(query, (data['given_name'], data['surname'], data['email'], hashed_password))
         connection.commit()
-        return {"message": "Data inserted successfully"}, 201
+        return {"message": "Data inserted successfully"}, 200
     except mysql.connector.IntegrityError as e:
         if e.errno == 1062:  # MySQL error number for duplicate entry
             return {"error": "User with this email already exists"}, 400
@@ -69,7 +69,7 @@ def authenticate_user(email, password):
             if bcrypt.checkpw(password.encode(), hashed_password.encode()):
                 # Passwords match, return the user data
                 return {"email": email},None,200
-        return None, {"error": "Invalid username or password"}, 401
+        return None, {"error": "Invalid username or password"}, 400
 
 
     finally:

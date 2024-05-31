@@ -34,7 +34,7 @@ def test_register_new_user(client):
     response = client.post('/register', json=register_data, headers=get_auth_header(username, password))
 
     # Assert the response status code is 200
-    assert response.status_code == 201
+    assert response.status_code == 200
 
     # Assert the response contains the expected message
     assert response.json['message'] == 'Data inserted successfully'
@@ -64,7 +64,7 @@ def test_login_with_correct_credentials(client):
 def test_get_user_data(client):
     # Prepare user data with a valid user ID
     user_data = {
-        'pk_user': 2  # Assuming 1 is a valid user ID
+        'pk_user': 1  # Assuming 1 is a valid user ID
     }
 
     username = os.getenv("API_USER")
@@ -109,7 +109,7 @@ def test_fetch_all_users(client):
 def test_update_user_data(client):
     # Prepare update data with a valid user ID
     update_data = {
-        'pk_user': 2,  # Assuming 36 is a valid user ID
+        'pk_user': 1,  # Assuming 36 is a valid user ID
         'given_name': 'Updat ',
         'surname': 'Updated Surname',
         'email': 'updated_email@example.com',
@@ -133,7 +133,7 @@ def test_update_user_data(client):
 def test_delete_user(client):
     # Prepare data with a valid user ID to delete
     delete_data = {
-        'user_id': 2  # Assuming 36 is a valid user ID
+        'user_id': 1  # Assuming 36 is a valid user ID
     }
 
     username = os.getenv("API_USER")

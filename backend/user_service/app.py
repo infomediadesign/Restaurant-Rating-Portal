@@ -27,11 +27,13 @@ def verify_password(username, password):
 
 
 @app.route('/register', methods=['POST'])
+@auth.login_required
 def insert_data_route():
     response, status_code = insert_data()
     return jsonify(response), status_code
 
 @app.route('/login', methods=['POST'])
+@auth.login_required
 def login_route():
     data = request.json
     response, status_code = login(data)
@@ -39,18 +41,21 @@ def login_route():
 
 
 @app.route('/fetch_by_id', methods=['POST'])
+@auth.login_required
 def get_user_data_route():
     response, status_code = get_user_data()
     return jsonify(response), status_code
 
 
 @app.route('/fetch_all', methods=['GET'])
+@auth.login_required
 def fetch_all_users_route():
     users, status_code = fetch_all_users()
     return jsonify(users), status_code
 
 
 @app.route('/update', methods=['POST'])
+@auth.login_required
 def update_user_data_route():
     data = request.json  # Extract JSON data from the request
     response = update_user_data(data)# Pass the data to the update_user_data function
@@ -59,6 +64,7 @@ def update_user_data_route():
 
 
 @app.route('/delete', methods=['POST'])
+@auth.login_required
 def delete_user_route():
     data = request.json
     response, status_code = delete_user(data)

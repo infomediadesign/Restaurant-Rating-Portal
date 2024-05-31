@@ -7,7 +7,7 @@ import bcrypt
 import os
 import requests
 from dotenv import load_dotenv
-
+from rating_reply_service import insert_rating_data , insert_reply_data , fetch_ratings_by_restaurant , fetch_replies_by_rating
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
@@ -18,49 +18,46 @@ def verify_password(username, password):
     api_key_encrypted = os.getenv("API_PASSWORD")
 
     print(bcrypt.checkpw(password.encode('utf-8'), api_key_encrypted.encode('utf-8')))
-    if username != os.getenv("API_USER"):
+    if username != os.getenv("API_RATING"):
         return False
     if not bcrypt.checkpw(password.encode('utf-8'), api_key_encrypted.encode('utf-8')):
         return False
     return True
 
 
-@app.route('/ratingdata', methods=['POST'])
+@app.route('/create', methods=['POST'])
 @auth.login_required
-def insert_data():
+def insert_data_route():
     data = request.json
-    if not data:
-        return jsonify({"error": "No data provided in request body"}), 400
-
-    rating_url = "http://localhost:5001/ratingdata"
-    try:
-        response = requests.post(rating_url, json=data)
-        response.raise_for_status()  # Raise HTTPError for bad responses
-        return jsonify({"message": "Data inserted successfully"})
-    except requests.RequestException as e:
-        return jsonify({"error": f"Failed to insert data: {e}"}), 500
+    response, status_code = insert_rating_data(data)
+    return jsonify(response), status_code
 
 
-@app.route('/replydata', methods=['POST'])
+@app.route('/replies/create', methods=['POST'])
 @auth.login_required
-def insert_reply_data():
+def insert_reply_data_route():
     data = request.json
-    if not data:
-        return jsonify({"error": "No data provided in request body"}), 400
-
-    reply_url = "http://localhost:5001/replydata"
-    try:
-        response = requests.post(reply_url, json=data)
-        response.raise_for_status()  # Raise HTTPError for bad responses
-        return jsonify({"message": "Data inserted successfully"})
-    except requests.RequestException as e:
-        return jsonify({"error": f"Failed to insert data: {e}"}), 500
+    response, status_code = insert_reply_data(data)
+    return jsonify(response), status_code
 
 
+@app.route('/fetch_by_restaurant', methods=['POST'])
+@auth.login_required
+def fetch_ratings_by_restaurant_route():
+    data = request.json
+    response, status_code = fetch_ratings_by_restaurant(data)
+    return jsonify(response), status_code
+
+@app.route('/replies/fetch_by_rating', methods=['POST'])
+@auth.login_required
+def fetch_replies_by_rating_route():
+    data = request.json
+    response, status_code = fetch_replies_by_rating(data)
+    return jsonify(response), status_code
 
 
 
 
 if __name__ == '__main__':
     load_dotenv()
-    app.run(debug=True)
+    app.run(debug=True , port = 5003)
