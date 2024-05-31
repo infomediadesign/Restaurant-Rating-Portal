@@ -23,7 +23,7 @@ def test_rating_data(client):
         'fk_user': 1,  # Assuming the user ID for this rating
         'fk_restaurant': 1,  # Assuming the restaurant ID for this rating
         'stars': 4,  # Rating stars
-        'rating_description': 'This is a test rating'  # Rating description
+        'review': 'This is a test rating'  # Rating description
     }
 
     # Retrieve username and password from environment variables
@@ -45,7 +45,7 @@ def test_insert_reply_data(client):
     reply_data = {
         'fk_user': 1,
         'fk_rating': 1,
-        'reply_text': 'Thank you for your feedback!'
+        'message': 'Thank you for your feedback!'
     }
 
     # Retrieve username and password from environment variables

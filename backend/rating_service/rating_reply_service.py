@@ -14,7 +14,7 @@ def insert_rating_data(data):
         return {"error": "No data provided in request body"}
 
     # Check if all required fields are present in the request data
-    required_fields = ['fk_user', 'fk_restaurant', 'stars', 'rating_description']
+    required_fields = ['fk_user', 'fk_restaurant', 'stars', 'review']
     for field in required_fields:
         if field not in data:
             return {"error": f"Field '{field}' is missing in request body"}, 400
@@ -34,8 +34,8 @@ def insert_rating_data(data):
     cursor = connection.cursor()
     try:
         # Insert rating data into the database
-        query = "INSERT INTO ratings (fk_user, fk_restaurant, stars, rating_description, timestamp) VALUES (%s, %s, %s, %s, NOW())"
-        cursor.execute(query, (data['fk_user'], data['fk_restaurant'], data['stars'], data['rating_description']))
+        query = "INSERT INTO ratings (fk_user, fk_restaurant, stars, review, timestamp) VALUES (%s, %s, %s, %s, NOW())"
+        cursor.execute(query, (data['fk_user'], data['fk_restaurant'], data['stars'], data['review']))
         connection.commit()
         return {"message": "Data inserted successfully"}, 200
     except mysql.connector.Error as e:
@@ -53,7 +53,7 @@ def insert_reply_data(data):
         return {"error": "No data provided in request body"}, 400
 
     # Check if all required fields are present in the request data
-    required_fields = ['fk_user', 'fk_rating', 'reply_text']
+    required_fields = ['fk_user', 'fk_rating', 'message']
     for field in required_fields:
         if field not in data:
             return {"error": f"Field '{field}' is missing in request body"}, 400
@@ -71,8 +71,8 @@ def insert_reply_data(data):
     cursor = connection.cursor()
     try:
         # Insert reply data into the database
-        query = "INSERT INTO replies (fk_user, fk_rating, reply_text, timestamp) VALUES (%s, %s, %s, NOW())"
-        cursor.execute(query, (data['fk_user'], data['fk_rating'], data['reply_text']))
+        query = "INSERT INTO replies (fk_user, fk_rating, message, timestamp) VALUES (%s, %s, %s, NOW())"
+        cursor.execute(query, (data['fk_user'], data['fk_rating'], data['message']))
         connection.commit()
         return {"message": "Data inserted successfully"}, 200
     except mysql.connector.Error as e:
