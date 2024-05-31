@@ -102,3 +102,33 @@ def fetch_by_id(restaurant_id):
     finally:
         cursor.close()
         connection.close()
+
+
+def fetch_by_owner(owner_id):
+    connection = create_connection()
+
+    if connection is None:
+        return jsonify({"error": "Failed to connect to the database"}), 500
+
+    cursor = connection.cursor()
+    try:
+        query = ("SELECT `restaurants`.*, GROUP_CONCAT(`pictures`.`url`) AS 'images' FROM `restaurants` "
+                 "LEFT JOIN `pictures` ON `pictures`.`fk_restaurant` = `pk_restaurant` "
+                 "WHERE `fk_owner` = %s")
+
+        cursor.execute(query, (owner_id,))
+        row_headers = [x[0] for x in cursor.description]
+        restaurant = cursor.fetchone()
+
+        if restaurant:
+            restaurant_result = dict(zip(row_headers, restaurant))
+            if restaurant_result["images"] is not None:
+                restaurant_result["images"] = restaurant_result["images"].split(",")
+
+            return jsonify(restaurant_result), 200
+    except Error as e:
+        return jsonify({"error": "Failed to fetch restaurants - " + str(e)}), 500
+
+    finally:
+        cursor.close()
+        connection.close()

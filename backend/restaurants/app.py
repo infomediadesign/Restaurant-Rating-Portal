@@ -61,6 +61,22 @@ def fetch_by_id():
     return fetch_restaurants.fetch_by_id(restaurant_id)
 
 
+@app.route('/fetch_all_by_owner', methods=['POST'])
+@auth.login_required
+def fetch_all_by_owner():
+    data = request.get_json()
+
+    if not data or 'fk_owner' not in data:
+        return jsonify({'message': 'No restaurant data provided'}), 400
+
+    try:
+        owner_id = int(data['pk_restaurant'])
+    except ValueError:
+        return jsonify({'message': 'Invalid restaurant ID'}), 400
+
+    return fetch_restaurants.fetch_by_owner(owner_id)
+
+
 @app.route('/create', methods=['POST'])
 @auth.login_required
 def create():
