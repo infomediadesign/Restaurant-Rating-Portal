@@ -183,7 +183,8 @@ def fetch_all_by_restaurant_id(fk_restaurant):
     try:
         sql = ("SELECT `pk_opening_hour`, `week_day`, `open_time`, `close_time` "
                "FROM `opening_hours` "
-               "WHERE `fk_restaurant` = %s")
+               "WHERE `fk_restaurant` = %s "
+               "ORDER BY `week_day`, `open_time` ASC")
         cursor.execute(sql, (fk_restaurant,))
         opening_hours = cursor.fetchall()
 
