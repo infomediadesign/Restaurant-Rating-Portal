@@ -21,7 +21,6 @@ def convert_time(time_to_convert):
     print(time_to_convert)
 
 
-
 def add(data):
     if data is None:
         return jsonify({'error': 'No data provided'}), 400
@@ -152,7 +151,8 @@ def fetch_by_id(pk_opening_hour):
     try:
         sql = ("SELECT `fk_restaurant`, `week_day`, `open_time`, `close_time` "
                "FROM `opening_hours` "
-               "WHERE `pk_opening_hour` = %s")
+               "WHERE `pk_opening_hour` = %s"
+               "ORDER BY `week_day`, `open_time` ASC")
         cursor.execute(sql, (pk_opening_hour,))
         opening_hour = cursor.fetchone()
 
