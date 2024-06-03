@@ -18,12 +18,23 @@ const RegisterUser = () => {
         }
 
         try {
-            const response = await axios.post('http://127.0.0.1:5000/users/register', {
-                given_name,
-                surname,
-                email,
-                password
-            });
+
+            const username = "api_gateway";
+            const userPassword = "Xe812C81M9yA ";
+            const token = btoa(`${username}:${userPassword}`);
+
+            const response = await axios.post(
+                'http://127.0.0.1:5000/users/register',
+                { given_name,
+                  surname, 
+                  email, 
+                  password },
+                {
+                    headers: {
+                        'Authorization': `Basic ${token}`
+                    }
+                }
+            );
 
             if (response.status === 200) {
                 alert('Registration successful! Please login.');
