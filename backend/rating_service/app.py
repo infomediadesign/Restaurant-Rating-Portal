@@ -7,11 +7,12 @@ import bcrypt
 import os
 import requests
 from dotenv import load_dotenv
-from rating_reply_service import insert_rating_data , insert_reply_data , fetch_ratings_by_restaurant , fetch_replies_by_rating
+from rating_reply_service import insert_rating_data , insert_reply_data , fetch_ratings_by_restaurant , fetch_replies_by_rating , fetch_avg_ratings
 from flask_cors import CORS
 
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 auth = HTTPBasicAuth()
 
 
@@ -56,6 +57,16 @@ def fetch_replies_by_rating_route():
     data = request.json
     response, status_code = fetch_replies_by_rating(data)
     return jsonify(response), status_code
+
+@app.route('/fetch_avg', methods=['GET'])
+@auth.login_required
+def get_overall_avg_ratings_route():
+    overall_avg_ratings, status_code = fetch_avg_ratings()
+    return jsonify(overall_avg_ratings), status_code
+
+
+
+
 
 
 

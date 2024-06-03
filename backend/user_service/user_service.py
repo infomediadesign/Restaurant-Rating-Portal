@@ -5,7 +5,6 @@ import bcrypt
 import mysql.connector
 import os
 
-app = Flask(__name__)
 
 
 def insert_data():
@@ -253,5 +252,3 @@ def delete_user(data):
         connection.close()
 
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5001)

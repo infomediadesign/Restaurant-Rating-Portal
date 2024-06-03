@@ -21,8 +21,8 @@ def test_rating_data(client):
     # Modify register_data with fields matching the ratings table
     register_data = {
         'fk_user': 1,  # Assuming the user ID for this rating
-        'fk_restaurant': 1,  # Assuming the restaurant ID for this rating
-        'stars': 4,  # Rating stars
+        'fk_restaurant': 2,  # Assuming the restaurant ID for this rating
+        'stars': 5,  # Rating stars
         'review': 'This is a test rating'  # Rating description
     }
 
@@ -88,3 +88,22 @@ def test_fetch_replies_by_rating(client):
     response_data = response.json
     assert 'replies' in response_data
     assert isinstance(response_data['replies'], list)
+
+
+def test_fetch_avg_ratings_route(client):
+    # Retrieve username and password from environment variables
+    username = os.getenv("API_RATING")
+    password = os.getenv("API_DECRYPTED_PASSWORD")
+
+    # Make a GET request to fetch overall average ratings
+    response = client.get('/fetch_avg', headers=get_auth_header(username, password))
+
+    # Assert the response status code is 200
+    assert response.status_code == 200
+
+    # Assert the response contains a dictionary
+    assert isinstance(response.json, dict)
+
+    # Store the dictionary in a text file
+    with open('avg_ratings.txt', 'w') as file:
+        file.write(str(response.json))

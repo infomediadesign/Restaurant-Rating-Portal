@@ -5,7 +5,7 @@ import bcrypt
 import mysql.connector
 import os
 
-app = Flask(__name__)
+
 
 
 def insert_rating_data(data):
@@ -139,6 +139,32 @@ def fetch_replies_by_rating(data):
         connection.close()
 
 
+def fetch_avg_ratings():
+    try:
+        username = os.getenv("DB_RATING_USER")
+        password = os.getenv("DB_RATING_PASSWORD")
+        database = os.getenv("DB_NAME")
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+        connection = create_connection(database, username, password)
+        if connection is None:
+            return {"error": "Failed to connect to the database"}, 500
+
+        cursor = connection.cursor(dictionary=True)
+        query = "SELECT fk_restaurant, AVG(stars) AS avg_rating FROM ratings GROUP BY fk_restaurant"
+        cursor.execute(query)
+        avg_ratings = cursor.fetchall()
+
+        overall_avg_ratings = {}
+        for rating in avg_ratings:
+            overall_avg_ratings[rating['fk_restaurant']] = rating['avg_rating']
+
+        return overall_avg_ratings, 200
+    except mysql.connector.Error as e:
+        return {"error": f"Failed to calculate overall average ratings: {str(e)}"}, 500
+    finally:
+        cursor.close()
+        connection.close()
+
+
+
+

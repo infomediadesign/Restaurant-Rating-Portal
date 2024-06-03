@@ -14,6 +14,7 @@ auth = HTTPBasicAuth()
 
 USER_SERVICE_URL = "http://localhost:5001"
 RESTAURANT_SERVICE_URL = "http://localhost:5002"
+RATING_SERVICE_URL =  "http://localhost:5003"
 
 
 @auth.verify_password
@@ -68,6 +69,41 @@ def update_user_data_route():
 def delete_user_route():
     response = requests.post(f"{USER_SERVICE_URL}/delete", json=request.json, auth=(os.getenv("USERS_API_USERNAME"), os.getenv("USERS_API_PASSWORD")))
     return jsonify(response.json()), response.status_code
+
+
+@app.route('/ratings/create', methods=['POST'])
+@auth.login_required
+def create_ratings_route():
+    response = requests.post(f"{RATING_SERVICE_URL}/create", json=request.json, auth=(os.getenv("RATINGS_API_USERNAME"), os.getenv("RATINGS_API_PASSWORD")))
+    return jsonify(response.json()), response.status_code
+
+@app.route('/ratings/replies/create', methods=['POST'])
+@auth.login_required
+def create_replies_route():
+    response = requests.post(f"{RATING_SERVICE_URL}/replies/create", json=request.json, auth=(os.getenv("RATINGS_API_USERNAME"), os.getenv("RATINGS_API_PASSWORD")))
+    return jsonify(response.json()), response.status_code
+
+@app.route('/ratings/fetch_by_resturant', methods=['POST'])
+@auth.login_required
+def fetch_rating_by_resturants_route():
+    response = requests.post(f"{RATING_SERVICE_URL}/fetch_by_resturant", json=request.json, auth=(os.getenv("RATINGS_API_USERNAME"), os.getenv("RATINGS_API_PASSWORD")))
+    return jsonify(response.json()), response.status_code
+
+@app.route('/ratings/replies/fetch_by_rating', methods=['POST'])
+@auth.login_required
+def fetch_replies_by_ratings_route():
+    response = requests.post(f"{RATING_SERVICE_URL}/replies/fetch_by_rating", json=request.json, auth=(os.getenv("RATINGS_API_USERNAME"), os.getenv("RATINGS_API_PASSWORD")))
+    return jsonify(response.json()), response.status_code
+
+@app.route('/ratings/fetch_avg', methods=['GET'])
+@auth.login_required
+def fetch_avg_route():
+    response = requests.get(f"{RATING_SERVICE_URL}/fetch_avg",  auth=(os.getenv("RATINGS_API_USERNAME"), os.getenv("RATINGS_API_PASSWORD")))
+    return jsonify(response.json()), response.status_code
+
+
+
+
 
 
 @app.route('/restaurants/fetch_all', methods=['POST'])
