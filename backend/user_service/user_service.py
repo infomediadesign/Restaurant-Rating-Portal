@@ -21,6 +21,10 @@ def insert_data():
     # Hash the password using bcrypt
     hashed_password = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
 
+    role = 'user'
+    if 'license_no' in data:
+        role = 'owner'
+
     username = os.getenv("DB_USER_USER")
     password = os.getenv("DB_USER_PASSWORD")
     database = os.getenv("DB_NAME")
@@ -31,8 +35,8 @@ def insert_data():
 
     cursor = connection.cursor()
     try:
-        query = "INSERT INTO users (given_name, surname, email, password) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (data['given_name'], data['surname'], data['email'], hashed_password))
+        query = "INSERT INTO users (given_name, surname, email, password,license_no, role) VALUES (%s, %s, %s, %s,%s,%s)"
+        cursor.execute(query, (data['given_name'], data['surname'], data['email'], hashed_password ,  data.get('license_no'), role))
         connection.commit()
         return {"message": "Data inserted successfully"}, 200
     except mysql.connector.IntegrityError as e:
@@ -58,16 +62,16 @@ def authenticate_user(email, password):
     cursor = connection.cursor()
     try:
         # Retrieve hashed password from the database for the given username
-        query = "SELECT password FROM users WHERE email = %s"
+        query = "SELECT password, role FROM users WHERE email = %s"
         cursor.execute(query, (email,))
         result = cursor.fetchone()
 
         if result:
-            hashed_password = result[0]  # Extract the hashed password from the result
+            hashed_password , role = result  # Extract the hashed password from the result
             # Check if the provided password matches the hashed password
             if bcrypt.checkpw(password.encode(), hashed_password.encode()):
                 # Passwords match, return the user data
-                return {"email": email},None,200
+                return {"email": email, "role": role},None,200
         return None, {"error": "Invalid username or password"}, 400
 
 
