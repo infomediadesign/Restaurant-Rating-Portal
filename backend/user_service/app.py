@@ -7,6 +7,7 @@ import bcrypt
 import os
 import requests
 from dotenv import load_dotenv
+from user_service import login , insert_data ,get_user_data , fetch_all_users , update_user_data , delete_user
 
 
 app = Flask(__name__)
@@ -25,69 +26,51 @@ def verify_password(username, password):
     return True
 
 
-@app.route('/registerdata', methods=['POST'])
+@app.route('/register', methods=['POST'])
 @auth.login_required
-def insert_data():
-    data = request.json
-    if not data:
-        return jsonify({"error": "No data provided in request body"}), 400
+def insert_data_route():
+    response, status_code = insert_data()
+    return jsonify(response), status_code
 
-    register_url = "http://localhost:5001/registerdata"
-    try:
-        response = requests.post(register_url, json=data)
-        response.raise_for_status()  # Raise HTTPError for bad responses
-        return jsonify({"message": "Data inserted successfully"})
-    except requests.RequestException as e:
-        return jsonify({"error": f"Failed to insert data: {e}"}), 500
-
-
-@app.route('/logindata', methods=['POST'])
+@app.route('/login', methods=['POST'])
 @auth.login_required
-def login_data():
-    # Extract data from the request
+def login_route():
     data = request.json
-    if not data:
-        return jsonify({"error": "No data provided in request body"}), 400
-
-    # Call the login service to handle login
-    login_url = "http://localhost:5001/logindata"
-    response = requests.post(login_url, json=data)
-
-    # Check the response from the login service
-    if response.status_code == 200:
-        return jsonify({"message": "User logged in successfully"})
-    elif response.status_code == 401:
-        return jsonify({"error": "Invalid username or password"}), 401
-    else:
-        return jsonify({"error": "Failed to log in"}), 500
+    response, status_code = login(data)
+    return jsonify(response), status_code
 
 
-@app.route('/userdata', methods=['POST'])
+@app.route('/fetch_by_id', methods=['POST'])
 @auth.login_required
-def user_data():
-    # Extract data from the request
+def get_user_data_route():
+    response, status_code = get_user_data()
+    return jsonify(response), status_code
+
+
+@app.route('/fetch_all', methods=['GET'])
+@auth.login_required
+def fetch_all_users_route():
+    users, status_code = fetch_all_users()
+    return jsonify(users), status_code
+
+
+@app.route('/update', methods=['POST'])
+@auth.login_required
+def update_user_data_route():
+    data = request.json  # Extract JSON data from the request
+    response = update_user_data(data)# Pass the data to the update_user_data function
+    status_code = response.pop('status_code', 200)  # Corrected variable name
+    return jsonify(response), status_code  # Return the response as JSON
+
+
+@app.route('/delete', methods=['POST'])
+@auth.login_required
+def delete_user_route():
     data = request.json
-    if not data:
-        return jsonify({"error": "No data provided in request body"}), 400
-
-    # Call the login service to handle login
-    user_url = "http://localhost:5001/userdata"
-    response = requests.post(user_url, json=data)
-
-    # Check the response from the login service
-    if response.status_code == 200:
-        # If the login service returns user data, return it
-        user_data = response.json()  # Assuming the user data is returned as JSON
-        return jsonify(user_data)
-    elif response.status_code == 401:
-        return jsonify({"error": "Unauthorized"}), 401  # Fix for unauthorized error
-    else:
-        return jsonify({"error": "Failed to retrieve user data"}), 500  # Fix for generic error
-
-
-
+    response, status_code = delete_user(data)
+    return jsonify(response), status_code
 
 if __name__ == '__main__':
     load_dotenv()
-    app.run(debug=True)
+    app.run(debug=True , port = 5001)
 
