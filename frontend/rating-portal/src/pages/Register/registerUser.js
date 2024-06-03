@@ -1,38 +1,34 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './registerUser.css';
 import background from '../../images/background.jpg';
+import axios from 'axios';
 
 const RegisterUser = () => {
-    const [name, setName] = useState('');
+    const [given_name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!name || !surname || !email || !password) {
+        if (!given_name || !surname || !email || !password) {
             alert('Please fill in all fields.');
             return;
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/registerdata', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, surname, email, password }),
+            const response = await axios.post('http://127.0.0.1:5000/users/register', {
+                given_name,
+                surname,
+                email,
+                password
             });
 
-            if (response.ok) {
+            if (response.status === 200) {
                 alert('Registration successful! Please login.');
-                navigate('/login');
             } else {
-                const data = await response.json();
-                alert(data.message);
+                alert(response.data.message);
             }
         } catch (error) {
             console.error('Registration failed:', error);
@@ -54,7 +50,7 @@ const RegisterUser = () => {
                     <input
                         type="text"
                         placeholder="First Name"
-                        value={name}
+                        value={given_name}
                         onChange={(e) => setName(e.target.value)}
                         className="register-user-input"
                     />
