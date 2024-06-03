@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 import background from '../../images/background.jpg';
@@ -8,10 +9,39 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Logic for backend data store
-        navigate('/');
+        
+        if (!email || !password) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        try {
+            const username = "api_gateway";
+            const userPassword = "Xe812C81M9yA";
+            const token = btoa(`${username}:${userPassword}`);
+
+            const response = await axios.post(
+                'http://127.0.0.1:5000/users/login',
+                { email, password },
+                {
+                    headers: {
+                        'Authorization': `Basic ${token}`
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                alert('Login successful!');
+                navigate('/');
+            } else {
+                alert('Login failed. Invalid credentials.');
+            }
+        } catch (error) {
+            console.error('Login failed:', error);
+            alert('Login failed. Please try again later.');
+        }
     };
 
     return (

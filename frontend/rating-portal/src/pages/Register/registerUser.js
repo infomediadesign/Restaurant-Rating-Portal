@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './registerUser.css';
 import background from '../../images/background.jpg';
-import axios from 'axios';
+
 
 const RegisterUser = () => {
     const [given_name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +23,7 @@ const RegisterUser = () => {
         try {
 
             const username = "api_gateway";
-            const userPassword = "Xe812C81M9yA ";
+            const userPassword = "Xe812C81M9yA";
             const token = btoa(`${username}:${userPassword}`);
 
             const response = await axios.post(
@@ -38,6 +41,7 @@ const RegisterUser = () => {
 
             if (response.status === 200) {
                 alert('Registration successful! Please login.');
+                navigate('/login');
             } else {
                 alert(response.data.message);
             }
