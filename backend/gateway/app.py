@@ -4,8 +4,11 @@ import bcrypt
 import os
 import requests
 from dotenv import load_dotenv
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 app.json.sort_keys = False
 auth = HTTPBasicAuth()
 

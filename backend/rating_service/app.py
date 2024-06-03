@@ -8,7 +8,9 @@ import os
 import requests
 from dotenv import load_dotenv
 from rating_reply_service import insert_rating_data , insert_reply_data , fetch_ratings_by_restaurant , fetch_replies_by_rating
+from flask_cors import CORS
 
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 app = Flask(__name__)
 auth = HTTPBasicAuth()
 

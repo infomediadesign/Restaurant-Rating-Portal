@@ -8,9 +8,13 @@ import os
 import requests
 from dotenv import load_dotenv
 from user_service import login , insert_data ,get_user_data , fetch_all_users , update_user_data , delete_user
+from flask_cors import CORS
+
+
 
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 auth = HTTPBasicAuth()
 
 

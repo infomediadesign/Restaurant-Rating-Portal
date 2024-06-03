@@ -6,6 +6,7 @@ from db import create_connection, create_tables
 import bcrypt
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 import fetch_restaurants
 import pictures
@@ -14,6 +15,7 @@ import opening_hours
 
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 app.json.sort_keys = False
 auth = HTTPBasicAuth()
 
