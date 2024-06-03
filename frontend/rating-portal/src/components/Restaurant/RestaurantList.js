@@ -1,118 +1,68 @@
-import React from 'react';
-import RestaurantCard from './RestaurantCard';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import RestaurantCard from "./RestaurantCard";
+import { useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar";
+import "./RestaurantList.css";
 
-import image1 from '../../images/image1.png';
-import image2 from '../../images/image2.jpg';
-import image3 from '../../images/image3.png';
-import image4 from '../../images/image4.png';
-import image5 from '../../images/image5.png';
-import image6 from '../../images/image6.jpg';
-import background from '../../images/background.jpg';
+import image1 from "../../images/image1.png";
+import image2 from "../../images/image2.jpg";
+import image3 from "../../images/image3.png";
+import image4 from "../../images/image4.png";
+import image5 from "../../images/image5.png";
+import image6 from "../../images/image6.jpg";
 
 const sampleRestaurants = [
-    {
-        id: 1,
-        name: 'Little India',
-        location: 'U1, Mannheim',
-        rating: 4.5,
-        image: image1,
-    },
-    {
-        id: 2,
-        name: 'Naan&Curry',
-        location: 'S2, Mannheim',
-        rating: 4.2,
-        image: image2,
-    },
-    {
-        id: 3,
-        name: 'Raja Rani',
-        location: 'Heidelberg',
-        rating: 4.8,
-        image: image3,
-    },
-    {
-        id: 4,
-        name: 'Spice Villa',
-        location: 'Frankfurt',
-        rating: 4.7,
-        image: image4,
-    },
-    {
-        id: 5,
-        name: 'Curry House',
-        location: 'Berlin',
-        rating: 4.3,
-        image: image5, 
-    },
-    {
-        id: 6,
-        name: 'Tandoori Palace',
-        location: 'Hamburg',
-        rating: 4.6,
-        image: image6, 
-    },
+    { id: 1, name: 'Little India', location: 'U1, Mannheim', rating: 4.5, image: image1 },
+    { id: 2, name: 'Naan&Curry', location: 'S2, Mannheim', rating: 4.2, image: image2 },
+    { id: 3, name: 'Raja Rani', location: 'Heidelberg', rating: 4.8, image: image3 },
+    { id: 4, name: 'Spice Villa', location: 'Frankfurt', rating: 4.7, image: image4 },
+    { id: 5, name: 'Curry House', location: 'Berlin', rating: 4.3, image: image5 },
+    { id: 6, name: 'Tandoori Palace', location: 'Hamburg', rating: 4.6, image: image6 },
 ];
 
-const RestaurantList = () => {
-    const navigate = useNavigate();
+        const RestaurantList = () => {
+        const [searchQuery, setSearchQuery] = useState("");
+        const navigate = useNavigate();
 
-    const handleRestaurantClick = (id) => {
-        navigate(`/restaurant/${id}`);
-    };
+        const handleRestaurantClick = (id) => {
+            navigate(`/restaurant/${id}`);
+        };
 
-    return (
-        <div
-            style={{
-                position: 'relative',
-                padding: '20px',
-                borderRadius: '10px',
-            }}
-        >
-            <div
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    zIndex: -1,
-                    background: `url(${background}) no-repeat center center fixed`,
-                    backgroundSize: 'cover',
-                    filter: 'brightness(0.5)',
-                }}
-            ></div>
+        const filteredRestaurants = sampleRestaurants.filter((restaurant) =>
+            restaurant.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
-            <div
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                    gap: '30px',
-                }}
-            >
-                {sampleRestaurants.map((restaurant) => (
-                    <div
-                        key={restaurant.id}
-                        style={{
-                            cursor: 'pointer',
-                            borderRadius: '10px',
-                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                            padding: '20px',
-                            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                            overflow: 'hidden',
-                        }}
-                        onClick={() => handleRestaurantClick(restaurant.id)}
-                        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-                        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                    >
-                        <RestaurantCard restaurant={restaurant} />
-                    </div>
+        return (
+        <div className="restaurant-list">
+            <div className="restaurant-list-background"></div>
+
+        <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            />
+
+            {filteredRestaurants.length > 0 ? (
+            <div className="restaurant-list-grid">
+                {filteredRestaurants.map((restaurant) => (
+                <div
+                    key={restaurant.id}
+                    className="restaurant-list-item"
+                    onClick={() => handleRestaurantClick(restaurant.id)}
+                    onMouseEnter={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.05)")
+                    }
+                    onMouseLeave={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                    }
+                >
+                    <RestaurantCard restaurant={restaurant} />
+                </div>
                 ))}
             </div>
+            ) : (
+            <p className="no-results">No results found</p>
+            )}
         </div>
-    );
-};
-
+        );
+        }
 export default RestaurantList;

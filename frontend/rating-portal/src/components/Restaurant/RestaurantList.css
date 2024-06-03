@@ -1,0 +1,44 @@
+.restaurant-list {
+    position: relative;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.restaurant-list-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: url('../../images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    filter: brightness(0.5);
+}
+
+.restaurant-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.restaurant-list-item {
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+}
+
+.no-results {
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+    margin-top: 20px;
+}
