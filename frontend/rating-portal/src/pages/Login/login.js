@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -35,6 +34,7 @@ const Login = () => {
                 }
             );
 
+
             if (response.status === 200) {
                 const userData = response.data;
                 login(userData);
@@ -44,7 +44,6 @@ const Login = () => {
                 alert('Login failed. Invalid credentials.');
             }
         } catch (error) {
-            console.error('Login failed:', error);
             alert('Login failed. Please try again later.');
         }
     };

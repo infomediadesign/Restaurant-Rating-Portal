@@ -1,4 +1,3 @@
-/* src/components/MyReviewsDropdown.css */
 .my-reviews-dropdown {
     position: relative;
     display: inline-block;
@@ -11,8 +10,8 @@
     font-size: 16px;
     border: none;
     cursor: pointer;
-    border-radius: 50%; /* Makes the button circular */
-    width: 60px; /* Width and height must be the same for a perfect circle */
+    border-radius: 50%;
+    width: 60px;
     height: 60px;
     display: flex;
     align-items: center;
@@ -33,7 +32,7 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
-    top: 70px; /* Adjust the position of the dropdown */
+    top: 70px;
     right: 0;
   }
   

@@ -13,12 +13,13 @@ import CreateRestaurant from './components/CreateRestaurant/CreateRestaurant';
 import EditRestaurant from './components/EditRestaurant/EditRestaurant';
 import ViewRatings from './components/ViewRatings/ViewRatings';
 import AddRestaurant from './components/AddRestaurant/AddRestaurant';
-import UserReviews from './components/UserReviews/UserReviews'; // Add this line
-import { UserProvider } from './components/UserContext/UserContext'; // Add this line
+import UserReviews from './components/UserReviews/UserReviews';
+import { UserProvider } from './components/UserContext/UserContext';
+import MyProfilePage from './components/MyProfile/MyProfile';
 
 function App() {
   return (
-    <UserProvider> {/* Wrap everything in UserProvider */}
+    <UserProvider>
       <Router>
         <Navbar />
         <Routes>
@@ -33,7 +34,8 @@ function App() {
           <Route path="/edit-restaurant/:id" element={<EditRestaurant />} />
           <Route path="/view-ratings/:id" element={<ViewRatings />} />
           <Route path="/add-restaurant" element={<AddRestaurant />} />
-          <Route path="/my-reviews" element={<UserReviews />} /> {/* Add this line */}
+          <Route path="/my-reviews" element={<UserReviews />} />
+          <Route path='/my-profile' element={<MyProfilePage />} />
         </Routes>
       </Router>
     </UserProvider>

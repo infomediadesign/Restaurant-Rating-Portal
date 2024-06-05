@@ -1,4 +1,4 @@
-// src/components/MyReviewsDropdown.js
+// src/components/MyProfile/MyReviewsDropdown.js
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext/UserContext';
@@ -13,8 +13,12 @@ const MyReviewsDropdown = () => {
         setIsOpen(!isOpen);
     };
 
+    const handleViewProfile = () => {
+        navigate('/my-profile');
+    };
+
     const handleViewReviews = () => {
-        navigate('/');
+        navigate('/my-reviews');
     };
 
     const handleLogout = () => {
@@ -30,6 +34,7 @@ const MyReviewsDropdown = () => {
             </button>
             {isOpen && (
                 <ul className="dropdown-menu">
+                    <li onClick={handleViewProfile}>My Profile</li>
                     <li onClick={handleViewReviews}>My Reviews</li>
                     <li onClick={handleLogout}>Logout</li>
                 </ul>
