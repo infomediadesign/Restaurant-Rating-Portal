@@ -62,16 +62,16 @@ def authenticate_user(email, password):
     cursor = connection.cursor()
     try:
         # Retrieve hashed password from the database for the given username
-        query = "SELECT password, role FROM users WHERE email = %s"
+        query = "SELECT pk_user , password, role FROM users WHERE email = %s"
         cursor.execute(query, (email,))
         result = cursor.fetchone()
 
         if result:
-            hashed_password , role = result  # Extract the hashed password from the result
+            pk_user,hashed_password , role = result  # Extract the hashed password from the result
             # Check if the provided password matches the hashed password
             if bcrypt.checkpw(password.encode(), hashed_password.encode()):
                 # Passwords match, return the user data
-                return {"email": email, "role": role},None,200
+                return {"pk_user": pk_user , "email": email, "role": role},None,200
         return None, {"error": "Invalid username or password"}, 400
 
 
