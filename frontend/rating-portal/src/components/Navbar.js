@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.png';
 import './Navbar.css';
+import MyReviewsDropdown from '../components/MyProfile/ProfileDropdown';
 
 const Navbar = ({ isLoggedIn }) => {
     return (
@@ -30,6 +31,7 @@ const Navbar = ({ isLoggedIn }) => {
                 >
                     Login
                 </Link>
+                <MyReviewsDropdown />
             </div>
         </nav>
     );

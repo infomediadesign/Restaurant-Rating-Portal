@@ -45,3 +45,19 @@
     background-color: white;
     color: #ff6347;
 }
+
+.register-user-button {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.register-user-button:hover{
+    background-color: white;
+    color: #ff6347;
+}

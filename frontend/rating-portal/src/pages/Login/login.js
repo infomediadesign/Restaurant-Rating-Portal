@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+// src/components/Login.js
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../components/UserContext/UserContext';
 import './login.css';
 import background from '../../images/background.jpg';
 
@@ -8,6 +10,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,6 +36,8 @@ const Login = () => {
             );
 
             if (response.status === 200) {
+                const userData = response.data;
+                login(userData);
                 alert('Login successful!');
                 navigate('/');
             } else {
