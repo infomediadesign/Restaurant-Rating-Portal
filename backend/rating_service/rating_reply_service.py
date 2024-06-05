@@ -167,4 +167,32 @@ def fetch_avg_ratings():
 
 
 
+def fetch_ratings_by_user(data):
+    if not data or 'user_id' not in data:
+        return {"error": "User ID is required"}, 400
+
+    user_id = data['user_id']
+
+    try:
+        username = os.getenv("DB_RATING_USER")
+        password = os.getenv("DB_RATING_PASSWORD")
+        database = os.getenv("DB_NAME")
+
+        connection = create_connection(database, username, password)
+        if connection is None:
+            return {"error": "Failed to connect to the database"}, 500
+
+        cursor = connection.cursor(dictionary=True)
+        query = "SELECT fk_restaurant, stars, review, timestamp FROM ratings WHERE fk_user = %s"
+        cursor.execute(query, (user_id,))
+        ratings = cursor.fetchall()
+
+        return {"ratings": ratings}, 200
+    except mysql.connector.Error as e:
+        return {"error": f"Failed to fetch ratings: {str(e)}"}, 500
+    finally:
+        cursor.close()
+        connection.close()
+
+
 
