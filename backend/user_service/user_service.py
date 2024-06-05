@@ -98,7 +98,7 @@ def login(data):
 
 
 
-def get_user_data():
+def get_user_data(data):
     data = request.json
     if not data or 'pk_user' not in data:
         return {"error": "User ID is required"}, 400

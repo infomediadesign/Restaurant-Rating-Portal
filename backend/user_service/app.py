@@ -47,7 +47,8 @@ def login_route():
 @app.route('/fetch_by_id', methods=['POST'])
 @auth.login_required
 def get_user_data_route():
-    response, status_code = get_user_data()
+    data = request.json
+    response, status_code = get_user_data(data)
     return jsonify(response), status_code
 
 
