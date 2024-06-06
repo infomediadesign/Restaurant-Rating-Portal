@@ -37,9 +37,14 @@ const Login = () => {
 
             if (response.status === 200) {
                 const userData = response.data;
+                console.log(userData)
                 login(userData);
                 alert('Login successful!');
-                navigate('/');
+                if (userData.role === 'owner') {
+                    navigate('/owner-dashboard');
+                } else {
+                    navigate('/');
+                }
             } else {
                 alert('Login failed. Invalid credentials.');
             }
