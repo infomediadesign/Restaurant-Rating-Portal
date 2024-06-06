@@ -1,68 +1,35 @@
-import React, { useState } from "react";
-import RestaurantCard from "./RestaurantCard";
-import { useNavigate } from "react-router-dom";
-import SearchBar from "./SearchBar";
-import "./RestaurantList.css";
+import React, { useState, useEffect } from 'react';
+import { fetchRestaurants } from '../api';
 
-import image1 from "../../images/image1.png";
-import image2 from "../../images/image2.jpg";
-import image3 from "../../images/image3.png";
-import image4 from "../../images/image4.png";
-import image5 from "../../images/image5.png";
-import image6 from "../../images/image6.jpg";
+const RestaurantList = () => {
+    const [restaurants, setRestaurants] = useState([]);
 
-const sampleRestaurants = [
-    { id: 1, name: 'Little India', location: 'U1, Mannheim', rating: 4.5, image: image1 },
-    { id: 2, name: 'Naan&Curry', location: 'S2, Mannheim', rating: 4.2, image: image2 },
-    { id: 3, name: 'Raja Rani', location: 'Heidelberg', rating: 4.8, image: image3 },
-    { id: 4, name: 'Spice Villa', location: 'Frankfurt', rating: 4.7, image: image4 },
-    { id: 5, name: 'Curry House', location: 'Berlin', rating: 4.3, image: image5 },
-    { id: 6, name: 'Tandoori Palace', location: 'Hamburg', rating: 4.6, image: image6 },
-];
-
-        const RestaurantList = () => {
-        const [searchQuery, setSearchQuery] = useState("");
-        const navigate = useNavigate();
-
-        const handleRestaurantClick = (id) => {
-            navigate(`/restaurant/${id}`);
+    useEffect(() => {
+        const getRestaurants = async () => {
+            try {
+                const data = await fetchRestaurants();
+                setRestaurants(data);
+            } catch (error) {
+                console.error('Error fetching restaurants:', error);
+            }
         };
+        getRestaurants();
+    }, []);
 
-        const filteredRestaurants = sampleRestaurants.filter((restaurant) =>
-            restaurant.name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-
-        return (
-        <div className="restaurant-list">
-            <div className="restaurant-list-background"></div>
-
-        <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            />
-
-            {filteredRestaurants.length > 0 ? (
-            <div className="restaurant-list-grid">
-                {filteredRestaurants.map((restaurant) => (
-                <div
-                    key={restaurant.id}
-                    className="restaurant-list-item"
-                    onClick={() => handleRestaurantClick(restaurant.id)}
-                    onMouseEnter={(e) =>
-                    (e.currentTarget.style.transform = "scale(1.05)")
-                    }
-                    onMouseLeave={(e) =>
-                    (e.currentTarget.style.transform = "scale(1)")
-                    }
-                >
-                    <RestaurantCard restaurant={restaurant} />
-                </div>
+    return (
+        <div>
+            <h1>Restaurants</h1>
+            <ul>
+                {restaurants.map((restaurant) => (
+                    <li key={restaurant.id}>
+                        <h2>{restaurant.name}</h2>
+                        <p>{restaurant.description}</p>
+                        <p>Rating: {restaurant.rating}</p>
+                    </li>
                 ))}
-            </div>
-            ) : (
-            <p className="no-results">No results found</p>
-            )}
+            </ul>
         </div>
-        );
-        }
+    );
+};
+
 export default RestaurantList;
