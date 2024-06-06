@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchRestaurants } from '../api';
+import { fetchRestaurants } from '../../api';
 
 const RestaurantList = () => {
     const [restaurants, setRestaurants] = useState([]);
