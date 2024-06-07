@@ -1,5 +1,6 @@
     import React from 'react';
     import RestaurantList from '../components/Restaurant/RestaurantList';
+    import SubmitRating from "../components/SubmitRating";
 
     const HomePage = () => {
     return (
