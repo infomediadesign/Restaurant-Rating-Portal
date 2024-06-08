@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/HomePage';
 import RestaurantList from './components/Restaurant/RestaurantList';
 import RestaurantDetail from './components/Restaurant/RestaurantDetail';
+import AddRestaurantPicture from './components/Restaurant/AddRestaurantPicture';
 import Login from './pages/Login/login';
 import RegisterUser from './pages/Register/registerUser';
 import RegisterOwner from './pages/Register/registerOwner';
@@ -36,7 +37,8 @@ function App() {
           <Route path="/add-restaurant" element={<AddRestaurant />} />
           <Route path="/my-reviews" element={<UserReviews />} />
           <Route path='/my-profile' element={<MyProfilePage />} />
-        </Routes>
+          <Route path='/add-restaurant-picture' element={<AddRestaurantPicture />}/>
+                  </Routes>
       </Router>
     </UserProvider>
   );

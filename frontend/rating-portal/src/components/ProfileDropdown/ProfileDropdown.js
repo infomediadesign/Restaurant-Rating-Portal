@@ -1,4 +1,3 @@
-// src/components/MyProfile/MyReviewsDropdown.js
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext/UserContext';

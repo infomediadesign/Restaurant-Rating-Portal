@@ -19,8 +19,6 @@
             filter: 'brightness(0.7)',
             }}
         ></div>
-        
-        <h1 style={{ textAlign: 'center', marginBottom: '20px', color: '#fff', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>Restaurants Near You</h1>
         <RestaurantList />
         </div>
     );
