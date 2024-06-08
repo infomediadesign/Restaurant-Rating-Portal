@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"; 
+import background from "../../images/background.jpg";
+import "bootstrap/dist/css/bootstrap.min.css";
+import image1 from'../../images/1/1.png';
 
 const RestaurantList = () => {
     const [restaurants, setRestaurants] = useState([]);
+    const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+    const [search, setSearch] = useState("");
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         const fetchRestaurants = async () => {
@@ -22,23 +29,45 @@ const RestaurantList = () => {
         fetchRestaurants();
     }, []);
 
+    useEffect(() => {
+        const results = restaurants.filter(restaurant =>
+            restaurant.name.toLowerCase().includes(search.toLowerCase())
+        );
+        setFilteredRestaurants(results);
+    }, [search, restaurants]);
+
     return (
-        <div>
-            <h1>Restaurants Near You</h1>
-            <ul>
-                {restaurants.map(restaurant => (
-                    <li key={restaurant.pk_restaurant}>
-                        <h2>{restaurant.name}</h2>
-                        <p>Genre: {restaurant.genre}</p>
-                        <p>Address: {`${restaurant.house_number} ${restaurant.street_name}, ${restaurant.city}, ${restaurant.state}, ${restaurant.zip_code}, ${restaurant.country}`}</p>
-                        <p>License: {restaurant.licence}</p>
-                        {restaurant.verified ? <p>Verified</p> : <p>Not Verified</p>}
-                        {restaurant.images && restaurant.images.map(image => (
-                            <img key={image} src={image} alt={`${restaurant.name}`} />
-                        ))}
-                    </li>
-                ))}
-            </ul>
+        <div className="bg-container" style={{
+            background: `url(${background}) no-repeat center center fixed`,
+            backgroundSize: "cover",
+        }}>
+            <div className="container mt-4">
+                <h1 className="text-center mb-4">Restaurants Near You</h1>
+                <input
+                    type="text"
+                    placeholder="Search restaurants..."
+                    className="form-control mb-4"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+
+                <div className="row">
+                    {filteredRestaurants.map(restaurant => (
+                        <div className="col-md-4 mb-4" key={restaurant.pk_restaurant}>
+                            <div className="card" onClick={() => navigate(`/restaurant/${restaurant.pk_restaurant}`)}>
+                                
+                        {restaurant.images&&<img src={restaurant.images[0]} className="card-img-top" alt={restaurant.name} />} 
+                                <div className="card-body">
+                                    <h5 className="card-title">{restaurant.name}</h5>
+                                    <p className="card-text">Genre: {restaurant.genre}</p>
+                                    <p className="card-text">Address: {`${restaurant.house_number} ${restaurant.street_name}, ${restaurant.city}`}</p>
+                                    {restaurant.verified ? <span className="badge bg-success">Verified</span> : <span className="badge bg-danger">Not Verified</span>}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };
