@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom"; 
 import background from "../../images/background.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
-import image1 from'../../images/1/1.png';
 
 const RestaurantList = () => {
     const [restaurants, setRestaurants] = useState([]);

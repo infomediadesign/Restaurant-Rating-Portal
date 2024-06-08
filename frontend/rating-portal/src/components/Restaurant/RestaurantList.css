@@ -1,44 +1,75 @@
-.restaurant-list {
-    position: relative;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.restaurant-list-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: url('../../images/background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    filter: brightness(0.5);
-}
-
-.restaurant-list-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-    width: 100%;
+/* .bg-container {
+    display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
-.restaurant-list-item {
+.card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
     cursor: pointer;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    text-align: center;
 }
 
-.no-results {
-    text-align: center;
-    color: #ffffff;
-    font-size: 18px;
-    margin-top: 20px;
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover; 
+}
+
+.nav {
+    background-color: #f8f9fa;
+    padding: 0.5rem 1rem;
+}
+
+.card-body {
+    padding: 15px;
+    background: rgba(205, 69, 69, 0.9);
+}
+
+.badge {
+    padding: 5px 10px;
+    font-size: 0.8em;
+}
+.nav-link {
+    color: #007bff;
+    padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+    color: #0056b3;
+} */
+
+.bg-container {
+    background-size: cover;
+    padding: 20px 0; /* Add padding around the content */
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent cards */
+    border-radius: 10px; /* Rounded corners for the cards */
+    overflow: hidden; /* Ensures no content spills outside the border */
+}
+
+.card-img-top {
+    height: 200px; /* Fixed height for images */
+    object-fit: cover; /* Ensures images cover the area without stretching */
+}
+
+.card-title {
+    color: #333; /* Dark color for better readability */
+}
+
+.card-text {
+    color: #555; /* Slightly lighter than the title for hierarchy */
+}
+
+/* Improvements for search input */
+.form-control {
+    max-width: 400px; /* Don't let the search bar stretch too wide */
+    margin: 0 auto 20px; /* Center align and add space below */
 }
