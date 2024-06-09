@@ -1,4 +1,3 @@
-// src/components/UserReviews.js
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { UserContext } from '../UserContext/UserContext';

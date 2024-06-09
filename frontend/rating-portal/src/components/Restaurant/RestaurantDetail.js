@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect} from "react";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { UserContext } from '../UserContext/UserContext.js';
+// import { UserContext } from '../UserContext/UserContext.js';
 
 const RestaurantDetail = () => {
     const { id } = useParams();
@@ -9,14 +9,15 @@ const RestaurantDetail = () => {
     const [rating, setRating] = useState('');
     const [review, setReview] = useState("");
     const [reply, setReply] = useState('');
-    const { user } = useContext(UserContext);
+    // const { user } = useContext(UserContext);
 
     useEffect(() => {
         const fetchRestaurantDetails = async () => {
             try {
                 const response = await axios.post(`http://127.0.0.1:5000/restaurants/fetch_by_id`,{ 
                     pk_restaurant: +id
-                }, {headers: {
+                }, {
+                    headers: {
                         'Authorization': `Basic ${btoa('api_gateway:Xe812C81M9yA')}`,
                         'Content-Type': 'application/json'
                     }
@@ -32,9 +33,9 @@ const RestaurantDetail = () => {
     const handleRatingSubmit = async () => {
         try {
             await axios.post("http://127.0.0.1:5000/ratings/create", { 
-                    fk_user: user.pk_user,
+                    fk_user: +id,
                     fk_restaurant: id,
-                    stars:rating,
+                    stars: rating,
                     review: review
                 }, {
                     headers: {
