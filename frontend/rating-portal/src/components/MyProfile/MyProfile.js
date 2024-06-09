@@ -77,9 +77,6 @@ const MyProfilePage = () => {
             const userPassword = 'Xe812C81M9yA';
             const token = btoa(`${username}:${userPassword}`);
 
-            console.log("pkUser:", pkUser);
-            console.log("formData:", formData);
-
             const response = await axios.post(
                 'http://localhost:5000/users/update',
                 {
