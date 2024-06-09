@@ -20,7 +20,7 @@ def get_auth_header(username, password):
 def test_rating_data(client):
     # Modify register_data with fields matching the ratings table
     register_data = {
-        'fk_user': 1,  # Assuming the user ID for this rating
+        'fk_user': 2,  # Assuming the user ID for this rating
         'fk_restaurant': 2,  # Assuming the restaurant ID for this rating
         'stars': 5,  # Rating stars
         'review': 'This is a test rating'  # Rating description

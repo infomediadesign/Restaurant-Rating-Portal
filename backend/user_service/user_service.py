@@ -100,11 +100,11 @@ def login(data):
 
 def get_user_data(data):
     data = request.json
-    if not data or 'pk_user' not in data:
+    if not data or 'user_id' not in data:
         return {"error": "User ID is required"}, 400
 
     try:
-        user_id = int(data['pk_user'])  # Ensure pk_user is a valid integer
+        user_id = int(data['user_id'])  # Ensure pk_user is a valid integer
     except ValueError:
         return {"error": "Invalid User ID"}, 400
 
