@@ -62,10 +62,9 @@ def fetch_all_users_route():
 @app.route('/update', methods=['POST'])
 @auth.login_required
 def update_user_data_route():
-    data = request.json  # Extract JSON data from the request
-    response = update_user_data(data)# Pass the data to the update_user_data function
-    status_code = response.pop('status_code', 200)  # Corrected variable name
-    return jsonify(response), status_code  # Return the response as JSON
+    data = request.json
+    response, status_code = update_user_data(data)
+    return jsonify(response), status_code
 
 
 @app.route('/delete', methods=['POST'])

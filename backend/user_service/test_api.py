@@ -20,9 +20,9 @@ def get_auth_header(username, password):
 
 def test_register_new_user(client):
     register_data = {
-        'given_name': 'J',
+        'given_name': 'j',
         'surname': 'Doe',
-        'email': 'new_usr@example.com',
+        'email': 'nee@example.com',
         'password': 'new_password'
     }
 
@@ -109,13 +109,12 @@ def test_fetch_all_users(client):
 
 
 def test_update_user_data(client):
-    # Prepare update data with a valid user ID
     update_data = {
-        'pk_user': 4,  # Assuming 36 is a valid user ID
-        'given_name': 'U ',
-        'surname': 'Updated Surname',
-        'email': 'updated_email@example.com',
-        'password': 'new_password'
+        'user_id': 92,
+        'given_name': 'Ummm ',
+        'surname': 'Updad Surname',
+        'email': 'updat_email@example.com',
+        'password': 'new_pasword'
     }
 
     username = os.getenv("API_USER")

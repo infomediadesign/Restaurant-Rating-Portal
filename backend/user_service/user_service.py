@@ -172,51 +172,56 @@ def fetch_all_users():
         cursor.close()
         connection.close()
 
-
 def update_user_data(data):
-    if not data or 'pk_user' not in data:
+    if not data or 'user_id' not in data:
         return {"error": "User ID is required"}, 400
 
-    user_id = data['pk_user']
+    user_id = data['user_id']
 
-    # Check if other required fields are present in the request data
     required_fields = ['given_name', 'surname', 'email', 'password']
     for field in required_fields:
         if field not in data:
             return {"error": f"Field '{field}' is missing in request body"}, 400
 
-    # Extract other fields from the request data
     given_name = data['given_name']
     surname = data['surname']
     email = data['email']
     password = data['password']
 
-    # Update user data in the database
-    try:
-        username = os.getenv("DB_USER_USER")
-        dbpassword = os.getenv("DB_USER_PASSWORD")
-        database = os.getenv("DB_NAME")
+    hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
+    username = os.getenv("DB_USER_USER")
+    dbpassword = os.getenv("DB_USER_PASSWORD")
+    database = os.getenv("DB_NAME")
+
+    if not username or not dbpassword or not database:
+        return {"error": "Database configuration is incomplete"}, 500
+
+    try:
         connection = create_connection(database, username, dbpassword)
         if connection is None:
             return {"error": "Failed to connect to the database"}, 500
 
         cursor = connection.cursor()
-        query = "UPDATE users SET given_name = %s, surname = %s, email = %s, password = %s WHERE pk_user = %s"
-        cursor.execute(query, (given_name, surname, email, password, user_id))
+        query = """
+        UPDATE users 
+        SET given_name = %s, surname = %s, email = %s, password = %s 
+        WHERE pk_user = %s
+        """
+        cursor.execute(query, (given_name, surname, email, hashed_password, user_id))
         connection.commit()
 
-        # Check if any rows were affected
         if cursor.rowcount == 1:
-            return {"message": "User data updated successfully", "status_code": 200}  # Include status_code
+            return {"message": "User data updated successfully"}, 200
         else:
-            return {"error": "User not found or no changes made", "status_code": 400}  # Include status_code
+            return {"error": "User not found or no changes made"}, 400
     except Exception as e:
-        return {"error": f"Failed to update user data: {str(e)}", "status_code": 500}  # Include status_code
+        return {"error": f"Failed to update user data: {str(e)}"}, 500
     finally:
-        cursor.close()
-        connection.close()
-
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
 
 def delete_user(data):
     if not data or 'user_id' not in data:
