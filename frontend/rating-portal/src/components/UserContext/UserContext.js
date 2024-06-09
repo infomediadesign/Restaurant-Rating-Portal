@@ -26,6 +26,7 @@ export const UserProvider = ({ children }) => {
         setUser(userData);
         if (userData && userData.pk_user) {
             setPkUser(userData.pk_user);
+            localStorage.setItem('pkUser', JSON.stringify(userData.pk_user));
         }
     };
 
