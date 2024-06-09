@@ -14,14 +14,17 @@ const Navbar = () => {
                 <img src={logo} alt="Logo" className="logo" />
             </div>
             <div className="nav-right">
-                <Link to="/" className="nav-link">Home</Link>
-                {!user ? (
+                {user ? (
                     <>
+                        <Link to={user.role === 'owner' ? '/owner-dashboard' : '/'} className="nav-link">Home</Link>
+                        <ProfileDropdown />
+                    </>
+                ) : (
+                    <>
+                        <Link to="/" className="nav-link">Home</Link>
                         <Link to="/register-user" className="nav-link">Register</Link>
                         <Link to="/login" className="nav-link">Login</Link>
                     </>
-                ) : (
-                    <ProfileDropdown />
                 )}
             </div>
         </nav>
