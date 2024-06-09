@@ -127,7 +127,7 @@ def get_user_data(data):
                 "pk_user": user[0],
                 "given_name": user[1],
                 "surname": user[2],
-                "email": user[3],
+                "email": user[4],
             }
             return user_data, 200
         else:
@@ -161,7 +161,7 @@ def fetch_all_users():
                 "pk_user": user[0],
                 "given_name": user[1],
                 "surname": user[2],
-                "email": user[3],
+                "email": user[4],
             }
             user_list.append(user_data)
 
