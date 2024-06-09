@@ -9,13 +9,13 @@ const RegisterOwner = () => {
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [businessLicense, setBusinessLicense] = useState("");
+  const [license_no, setlicense_no] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!given_name || !surname || !email || !password || !businessLicense) {
+    if (!given_name || !surname || !email || !password || !license_no) {
       alert("Please fill in all fields.");
       return;
     }
@@ -27,7 +27,7 @@ const RegisterOwner = () => {
 
       const response = await axios.post(
         "http://127.0.0.1:5000/users/register",
-        { given_name, surname, email, password },
+        { given_name, surname, email, password, license_no },
         {
           headers: {
             Authorization: `Basic ${token}`,
@@ -93,8 +93,8 @@ const RegisterOwner = () => {
           <input
             type="text"
             placeholder="Business License"
-            value={businessLicense}
-            onChange={(e) => setBusinessLicense(e.target.value)}
+            value={license_no}
+            onChange={(e) => setlicense_no(e.target.value)}
             className="register-owner-input"
           />
           <br />

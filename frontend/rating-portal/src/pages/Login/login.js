@@ -34,21 +34,23 @@ const Login = () => {
                 }
             );
 
-
             if (response.status === 200) {
-                const userData = response.data;
-                console.log(userData)
+                const userData = response.data.user;
+                console.log('User Data:', userData);
                 login(userData);
                 alert('Login successful!');
                 if (userData.role === 'owner') {
                     navigate('/owner-dashboard');
-                } else {
+                } else if (userData.role === 'user') {
                     navigate('/');
+                } else {
+                    alert('Unknown user role. Please contact support.');
                 }
             } else {
                 alert('Login failed. Invalid credentials.');
             }
         } catch (error) {
+            console.error('Login Error:', error);
             alert('Login failed. Please try again later.');
         }
     };
