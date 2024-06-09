@@ -9,7 +9,9 @@ const MyProfilePage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [editing, setEditing] = useState(false);
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+        password: ""
+    });
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -51,7 +53,8 @@ const MyProfilePage = () => {
         setFormData({
             given_name: profileData.given_name,
             surname: profileData.surname,
-            email: profileData.email
+            email: profileData.email,
+            password: ""
         });
     };
 
@@ -63,10 +66,19 @@ const MyProfilePage = () => {
     };
 
     const handleSave = async () => {
+        // Check for empty fields
+        if (!formData.given_name || !formData.surname || !formData.email || !formData.password) {
+            window.alert("All fields are required. Please fill in all fields.");
+            return;
+        }
+
         try {
             const username = 'api_gateway';
             const userPassword = 'Xe812C81M9yA';
             const token = btoa(`${username}:${userPassword}`);
+
+            console.log("pkUser:", pkUser);
+            console.log("formData:", formData);
 
             const response = await axios.post(
                 'http://localhost:5000/users/update',
@@ -80,10 +92,18 @@ const MyProfilePage = () => {
                     }
                 }
             );
-            setProfileData(response.data);
+
+            setProfileData({
+                ...profileData,
+                ...formData
+            });
+
             setEditing(false);
+            window.alert("Profile updated successfully.");
         } catch (error) {
+            console.error("Error updating profile data:", error);
             setError("Error updating profile data. Please try again later.");
+            window.alert("Error updating profile data. Please try again later.");
         }
     };
 
@@ -100,9 +120,42 @@ const MyProfilePage = () => {
             <h1 className="profile-heading">My Profile</h1>
             {editing ? (
                 <div className="profile-data">
-                    <input type="text" name="given_name" value={formData.given_name} onChange={handleChange} />
-                    <input type="text" name="surname" value={formData.surname} onChange={handleChange} />
-                    <input type="text" name="email" value={formData.email} onChange={handleChange} />
+                    <div className="form-group">
+                        <input 
+                            type="text" 
+                            name="given_name" 
+                            value={formData.given_name} 
+                            onChange={handleChange} 
+                            placeholder='Enter your name' 
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            type="text" 
+                            name="surname" 
+                            value={formData.surname} 
+                            onChange={handleChange} 
+                            placeholder='Enter your surname' 
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            type="email" 
+                            name="email" 
+                            value={formData.email} 
+                            onChange={handleChange} 
+                            placeholder='Enter your email id' 
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            type="password" 
+                            name="password" 
+                            value={formData.password} 
+                            onChange={handleChange} 
+                            placeholder='Enter your password' 
+                        />
+                    </div>
                     <button className="save-btn" onClick={handleSave}>Save</button>
                 </div>
             ) : (
