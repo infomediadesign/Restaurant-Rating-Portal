@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"; 
 import background from "../../images/background.jpg";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import './RestaurantList.css';
 
 const RestaurantList = () => {
@@ -10,7 +13,7 @@ const RestaurantList = () => {
     const [search, setSearch] = useState("");
     const navigate = useNavigate(); 
 
-    useEffect(() => {
+useEffect(() => {
         const fetchRestaurants = async () => {
             try {
                 const response = await axios.post('http://127.0.0.1:5000/restaurants/fetch_all', {}, {
@@ -28,15 +31,25 @@ const RestaurantList = () => {
         fetchRestaurants();
     }, []);
 
-    useEffect(() => {
+useEffect(() => {
         const results = restaurants.filter(restaurant =>
             restaurant.name.toLowerCase().includes(search.toLowerCase())
         );
         setFilteredRestaurants(results);
     }, [search, restaurants]);
 
-    return (
-        <div className="bg-container" style={{
+const SliderSettings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+    };   
+
+return (
+    <div className="bg-container" style={{
             background: `url(${background}) no-repeat center center fixed`,
             backgroundSize: "cover",
         }}>
@@ -54,8 +67,13 @@ const RestaurantList = () => {
                     {filteredRestaurants.map(restaurant => (
                         <div className="col-md-4 mb-4" key={restaurant.pk_restaurant}>
                             <div className="card" onClick={() => navigate(`/restaurant/${restaurant.pk_restaurant}`)}>
-                                
-                        {restaurant.images&&<img src={restaurant.images[0]} className="card-img-top" alt={restaurant.name} />} 
+                                <Slider {...SliderSettings}>
+                                    {restaurant.images.map((image, index) => (
+                                        <div key={index}>
+                                            <img src={image} className="card-img-top" alt={restaurant.name} />
+                                        </div>
+                                    ))}
+                                </Slider>
                                 <div className="card-body">
                                     <h5 className="card-title">{restaurant.name}</h5>
                                     <p className="card-text">Genre: {restaurant.genre}</p>
