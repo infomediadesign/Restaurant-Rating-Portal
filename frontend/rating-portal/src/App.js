@@ -37,6 +37,7 @@ function App() {
           <Route path="/add-restaurant" element={<AddRestaurant />} />
           <Route path="/my-reviews" element={<MyReviews />} />
           <Route path="/my-profile" element={<MyProfilePage />} />
+          <Route path="/add-resturant-picture" element={<AddRestaurantPicture />} />
           <Route
             path="/add-restaurant-picture"
             element={<AddRestaurantPicture />}
