@@ -13,10 +13,27 @@ const MyReviews = () => {
         if (user) {
             const fetchReviews = async () => {
                 try {
-                    const response = await axios.post('http://127.0.0.1:5000/ratings/fetch_by_user', {
-                        user_id: user.pk_user
-                    });
-                    setReviews(response.data);
+                    const username = 'api_gateway';
+                    const userPassword = 'Xe812C81M9yA';
+                    const token = btoa(`${username}:${userPassword}`);
+
+                    const response = await axios.post(
+                        'http://127.0.0.1:5000/ratings/fetch_by_user',
+                        { user_id: user.pk_user },
+                        {
+                            headers: {
+                                'Authorization': `Basic ${token}`
+                            }
+                        }
+                    );
+
+                    // Ensure response data is an array
+                    if (response.data && Array.isArray(response.data.ratings)) {
+                        setReviews(response.data.ratings);
+                    } else {
+                        console.error('Response data is not an array:', response.data);
+                        setReviews([]);
+                    }
                 } catch (error) {
                     console.error('Failed to fetch reviews:', error);
                 }
@@ -32,26 +49,60 @@ const MyReviews = () => {
     };
 
     const handleUpdate = async (reviewId) => {
+        if (!updatedContent.trim()) {
+            window.alert('Review content cannot be empty.');
+            return;
+        }
         try {
-            await axios.post('http://127.0.0.1:5000/ratings/update', {
-                rating_id: reviewId,
-                review: updatedContent
-            });
+            const username = 'api_gateway';
+            const userPassword = 'Xe812C81M9yA';
+            const token = btoa(`${username}:${userPassword}`);
+
+            await axios.post(
+                'http://127.0.0.1:5000/ratings/update',
+                {
+                    rating_id: reviewId,
+                    review: updatedContent
+                },
+                {
+                    headers: {
+                        'Authorization': `Basic ${token}`
+                    }
+                }
+            );
+
             setReviews(reviews.map(review => 
                 review.pk_rating === reviewId ? { ...review, review: updatedContent } : review
             ));
             setEditingReviewId(null);
+            window.alert('Review updated successfully!');
         } catch (error) {
             console.error('Failed to update review:', error);
+            window.alert('Failed to update review.');
         }
     };
 
     const handleDelete = async (reviewId) => {
         try {
-            await axios.post('http://127.0.0.1:5000/ratings/delete', { rating_id: reviewId });
+            const username = 'api_gateway';
+            const userPassword = 'Xe812C81M9yA';
+            const token = btoa(`${username}:${userPassword}`);
+
+            await axios.post(
+                'http://127.0.0.1:5000/ratings/delete',
+                { rating_id: reviewId },
+                {
+                    headers: {
+                        'Authorization': `Basic ${token}`
+                    }
+                }
+            );
+
             setReviews(reviews.filter(review => review.pk_rating !== reviewId));
+            window.alert('Review deleted successfully!');
         } catch (error) {
             console.error('Failed to delete review:', error);
+            window.alert('Failed to delete review.');
         }
     };
 
