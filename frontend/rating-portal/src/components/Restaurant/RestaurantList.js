@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"; 
 import background from "../../images/background.jpg";
+import './RestaurantList.css';
 
 const RestaurantList = () => {
     const [restaurants, setRestaurants] = useState([]);
