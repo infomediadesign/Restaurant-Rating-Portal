@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/HomePage";
 import RestaurantList from "./components/Restaurant/RestaurantList";
-import RestaurantDetail from "./components/Restaurant/RestaurantDetail";
+import RestaurantDetail from './components/RestaurantDetail/RestaurantDetail';
+import RatingComponent from "./components/Ratings/RatingComponent";
 import AddRestaurantPicture from "./components/Restaurant/AddRestaurantPicture";
 import Login from "./pages/Login/login";
 import RegisterUser from "./pages/Register/registerUser";
@@ -35,6 +36,7 @@ function App() {
           <Route path="/edit-restaurant/:id" element={<EditRestaurant />} />
           <Route path="/view-ratings/:id" element={<ViewRatings />} />
           <Route path="/add-restaurant" element={<AddRestaurant />} />
+          <Route path="/rating" element={<RatingComponent />} />
           <Route path="/my-reviews" element={<MyReviews />} />
           <Route path="/my-profile" element={<MyProfilePage />} />
           <Route path="/add-resturant-picture" element={<AddRestaurantPicture />} />
