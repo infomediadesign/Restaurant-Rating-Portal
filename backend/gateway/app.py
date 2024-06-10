@@ -83,10 +83,10 @@ def create_replies_route():
     response = requests.post(f"{RATING_SERVICE_URL}/replies/create", json=request.json, auth=(os.getenv("RATINGS_API_USERNAME"), os.getenv("RATINGS_API_PASSWORD")))
     return jsonify(response.json()), response.status_code
 
-@app.route('/ratings/fetch_by_resturant', methods=['POST'])
+@app.route('/ratings/fetch_by_restaurant', methods=['POST'])
 @auth.login_required
-def fetch_rating_by_resturants_route():
-    response = requests.post(f"{RATING_SERVICE_URL}/fetch_by_resturant", json=request.json, auth=(os.getenv("RATINGS_API_USERNAME"), os.getenv("RATINGS_API_PASSWORD")))
+def fetch_rating_by_restaurants_route():
+    response = requests.post(f"{RATING_SERVICE_URL}/fetch_by_restaurant", json=request.json, auth=(os.getenv("RATINGS_API_USERNAME"), os.getenv("RATINGS_API_PASSWORD")))
     return jsonify(response.json()), response.status_code
 
 @app.route('/ratings/replies/fetch_by_rating', methods=['POST'])
