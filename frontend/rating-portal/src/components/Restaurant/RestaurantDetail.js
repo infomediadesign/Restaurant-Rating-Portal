@@ -9,7 +9,7 @@ const RestaurantDetail = () => {
     const { id } = useParams();
     const [restaurant, setRestaurant] = useState(null);
     const [reviews, setReviews] = useState([]);
-    const { openingHours, setOpeningHours } = useState([]);
+    const [ openingHours, setOpeningHours ] = useState([]);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState("");
     const [reply, setReply] = useState('');
@@ -28,11 +28,6 @@ const formattedHours = +hours % 12 || 12; // Converts "00" to "12"
 return `${formattedHours}:${minutes} ${period}`;
 };
 
-    useEffect(() => {
-        fetchRestaurantDetails();
-        fetchRatings();
-        fetchOpeningHours();
-    }, [fetchRestaurantDetails, fetchRatings, fetchOpeningHours]);
 
     const fetchRestaurantDetails =useCallback( async () => {
         setIsLoading(true);
@@ -96,16 +91,30 @@ return `${formattedHours}:${minutes} ${period}`;
     }
 },[id]);
 
-    const renderOpeningHours = () => {
-    if (!openingHours || !openingHours.length) {
-        return <p>No opening hours available.</p>;
+    const renderReviews = () => {
+    if (!reviews || reviews.length === 0) {
+        return <p>No reviews available.</p>;
     }
-    return openingHours.map((hour, index) => (
-        <div key={index}>
-            <strong>Day {hour.week_day}: </strong> {hour.open_time} - {hour.close_time}
+    return reviews.map((review) => (
+        <div key={review.id} className="review-item">
+            <strong>{review.user_name}: </strong>{review.review}
+            <input type="text" value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Enter reply" />
+            <button onClick={() => handleReplySubmit(review.id)} disabled={isLoading}>Submit Reply</button>
         </div>
     ));
 };
+
+    const renderOpeningHours = () => {
+        if (!openingHours || !openingHours.length) {
+            return <p>No opening hours available.</p>;
+        }
+        return openingHours.map((hour, index) => (
+            <div key={index}>
+                <strong>{getDayName(hour.week_day)}: </strong> 
+                {formatTime(hour.open_time)} - {formatTime(hour.close_time)}
+            </div>
+        ));
+    };
 
     const handleRatingSubmit = async () => {
         if (rating === 0) {
@@ -167,6 +176,7 @@ return `${formattedHours}:${minutes} ${period}`;
         }
     };
 
+    //renders stars
     const renderStars = () => {
         return [...Array(5)].map((_, index) => {
             return (
@@ -176,6 +186,12 @@ return `${formattedHours}:${minutes} ${period}`;
             );
         });
     };
+
+    useEffect(() => {
+        fetchRestaurantDetails();
+        fetchRatings();
+        fetchOpeningHours();
+    }, [fetchRestaurantDetails, fetchRatings, fetchOpeningHours]);
 
 return (
     <div className="bg-container" style={{

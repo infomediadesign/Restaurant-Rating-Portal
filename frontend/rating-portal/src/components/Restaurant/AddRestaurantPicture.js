@@ -8,7 +8,7 @@ const AddRestaurantPicture = ({ restaurantId }) => {
         event.preventDefault();
         try {
             const response = await axios.post('http://127.0.0.1:5000/restaurants/pictures/upload', {
-                fk_restaurant: 4,
+                fk_restaurant: 1,
                 url: imageUrl
             }, {
                 headers: {
