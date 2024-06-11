@@ -195,4 +195,45 @@ def fetch_ratings_by_user(data):
         connection.close()
 
 
+def delete_by_id(data):
+    if not data or 'rating_id' not in data:
+        return {"error": " ID is required"}, 400
+
+    rating_id = data['rating_id']
+
+    try:
+        username = os.getenv("DB_RATING_USER")
+        password = os.getenv("DB_RATING_PASSWORD")
+        database = os.getenv("DB_NAME")
+
+        connection = create_connection(database, username, password)
+        if connection is None:
+            return {"error": "Failed to connect to the database"}, 500
+
+        cursor = connection.cursor()
+
+        # Check if the user exists
+        cursor.execute("SELECT 1 FROM ratings WHERE pk_rating = %s", (rating_id,))
+        if cursor.fetchone():
+            # Delete the user
+            cursor.execute("DELETE FROM ratings WHERE pk_rating = %s", (rating_id,))
+            connection.commit()
+
+            # Update remaining users' pk_user
+            cursor.execute("UPDATE ratings SET pk_rating = pk_rating - 1 WHERE pk_rating > %s", (rating_id,))
+            connection.commit()
+
+            return {"message": "Rating deleted successfully"}, 200
+        else:
+            return {"error": "Rating not found"}, 404
+    except Exception as e:
+        return {"error": f"Failed to delete Rating: {str(e)}"}, 500
+    finally:
+        cursor.close()
+        connection.close()
+
+
+
+
+
 

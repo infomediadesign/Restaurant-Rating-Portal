@@ -7,7 +7,7 @@ import bcrypt
 import os
 import requests
 from dotenv import load_dotenv
-from rating_reply_service import insert_rating_data , insert_reply_data , fetch_ratings_by_restaurant , fetch_replies_by_rating , fetch_avg_ratings , fetch_ratings_by_user
+from rating_reply_service import insert_rating_data , insert_reply_data , fetch_ratings_by_restaurant , fetch_replies_by_rating , fetch_avg_ratings , fetch_ratings_by_user,delete_by_id
 from flask_cors import CORS
 
 
@@ -71,6 +71,15 @@ def fetch_ratings_by_user_route():
     data = request.json
     response, status_code = fetch_ratings_by_user(data)
     return jsonify(response), status_code
+
+
+@app.route('/delete_by_id', methods=['POST'])
+@auth.login_required
+def delete_ratings_by_id_route():
+    data = request.json
+    response, status_code = delete_by_id(data)
+    return jsonify(response), status_code
+
 
 
 

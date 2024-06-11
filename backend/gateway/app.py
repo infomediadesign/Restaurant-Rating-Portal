@@ -71,6 +71,13 @@ def delete_user_route():
     return jsonify(response.json()), response.status_code
 
 
+@app.route('/ratings/delete_by_id', methods=['POST'])
+@auth.login_required
+def delete_rating_route():
+    response = requests.post(f"{RATING_SERVICE_URL}/delete_by_id", json=request.json, auth=(os.getenv("RATINGS_API_USERNAME"), os.getenv("RATINGS_API_PASSWORD")))
+    return jsonify(response.json()), response.status_code
+
+
 @app.route('/ratings/create', methods=['POST'])
 @auth.login_required
 def create_ratings_route():
