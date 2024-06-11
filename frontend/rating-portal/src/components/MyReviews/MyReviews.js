@@ -33,6 +33,8 @@ const MyReviews = () => {
                         console.error('Response data is not an array:', response.data);
                         setReviews([]);
                     }
+
+                    console.log(response.data)
                 } catch (error) {
                     console.error('Failed to fetch reviews:', error);
                 }
@@ -49,7 +51,7 @@ const MyReviews = () => {
             const token = btoa(`${username}:${userPassword}`);
 
             await axios.post(
-                'http://127.0.0.1:5000/ratings/delete',
+                'http://127.0.0.1:5000/ratings/delete_by_id',
                 { rating_id: reviewId },
                 {
                     headers: {
