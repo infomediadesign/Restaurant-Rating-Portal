@@ -23,6 +23,23 @@
     margin-bottom: 20px;
 }
 
+.restaurant-name {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #ff6347;
+  border-radius: 5px;
+}
+
+.card-text {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
 h1 {
     color: #333;
     font-size: 2rem;
