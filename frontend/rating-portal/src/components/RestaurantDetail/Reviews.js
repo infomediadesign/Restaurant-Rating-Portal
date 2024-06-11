@@ -1,32 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchRatings, fetchRepliesByRating, createRating, createReply } from '../../apiService';
 
-const Reviews = ({ reviews, isLoading, handleReplySubmit }) => {
-    const [reply, setReply] = useState('');
+const Reviews = ({ restaurantId }) => {
+    const [reviews, setReviews] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    if (isLoading) return <p>Loading reviews...</p>;
-    if (!Array.isArray(reviews) || reviews.length === 0) return <p>No reviews available.</p>;
+    useEffect(() => {
+        const loadRatingsAndReplies = async () => {
+            try {
+                setIsLoading(true);
+                const fetchedRatings = await fetchRatings(restaurantId);
+                const reviewsWithReplies = await Promise.all(
+                    fetchedRatings.map(async (rating) => {
+                        const replies = await fetchRepliesByRating(rating.pk_rating);
+                        return { ...rating, replies };
+                    })
+                );
+                setReviews(reviewsWithReplies);
+                console.log("Reviews with replies fetched", reviewsWithReplies);
+            } catch (error) {
+                console.error("Failed to fetch ratings and replies", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadRatingsAndReplies();
+    }, [restaurantId]); 
 
     return (
         <div>
-            {reviews.map((review) => (
-                <div key={review.pk_rating}>
-                    <strong>{review.user_name}:</strong> {review.review}
-                    {review.replies && review.replies.length > 0 ? (
-                        review.replies.map((reply, index) => (
-                            <p key={`${review.pk_rating}-${index}`}>{reply.message}</p>
-                        ))
-                    ) : (
-                        <p>No replies yet.</p>
-                    )}
-                    <input type="text" value={reply} onChange={(e) => setReply(e.target.value)} placeholder="Enter reply" />
-                    <button onClick={() => {
-                        handleReplySubmit(review.pk_rating);
-                        setReply('');
-                    }} disabled={isLoading}>
-                        Submit Reply
-                    </button>
-                </div>
-            ))}
+            {isLoading ? (
+                <p>Loading reviews...</p>
+            ) : (
+                reviews.length > 0 ? (
+                    reviews.map((review) => (
+                        <div key={review.pk_rating}>
+                            <strong>User {review.fk_user}:</strong> {review.review}
+                            {review.replies && review.replies.length > 0 ? (
+                                review.replies.map(reply => (
+                                    <p key={reply.pk_reply}>
+                                        <strong>Reply from User {reply.fk_user}:</strong> {reply.message}
+                                    </p>
+                                ))
+                            ) : (
+                                <p>No replies yet.</p>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p>No reviews available.</p>
+                )
+            )}
         </div>
     );
 };

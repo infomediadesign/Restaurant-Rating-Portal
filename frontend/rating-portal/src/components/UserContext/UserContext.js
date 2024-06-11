@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 
 export const UserContext = createContext();
 
@@ -22,20 +22,20 @@ export const UserProvider = ({ children }) => {
         }
     }, [user]);
 
-    const login = (userData) => {
+    const login = useCallback((userData) => {
         setUser(userData);
         if (userData && userData.pk_user) {
             setPkUser(userData.pk_user);
             localStorage.setItem('pkUser', JSON.stringify(userData.pk_user));
         }
-    };
+    }, []);
 
-    const logout = () => {
+    const logout = useCallback(() => {
         setUser(null);
         setPkUser(null);
         localStorage.removeItem('user');
         localStorage.removeItem('pkUser');
-    };
+    },[]);
 
     return (
         <UserContext.Provider value={{ user, pkUser, login, logout }}>

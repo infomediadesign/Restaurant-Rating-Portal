@@ -1,10 +1,11 @@
 import React from 'react';
+import "./OpeningHours.css";
 
 const OpeningHours = ({ openingHours }) => {
     if (!openingHours || openingHours.length === 0) return <p>No opening hours available.</p>;
 
     const getDayName = (dayNumber) => {
-        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         return days[dayNumber - 1];
     };
 
@@ -16,9 +17,9 @@ const OpeningHours = ({ openingHours }) => {
     };
 
     return (
-        <div>
+        <div  className="opening-hours-container">
             {openingHours.map((hour, index) => (
-                <div key={`hour-${index}`}>
+                <div key={`hour-${index}`}  className="hour-detail">
                     <strong>{getDayName(hour.week_day)}: </strong> 
                     {formatTime(hour.open_time)} - {formatTime(hour.close_time)}
                 </div>

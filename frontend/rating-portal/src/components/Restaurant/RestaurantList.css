@@ -24,11 +24,15 @@
 .container {
     width: 90%;
     max-width: 1200px;
+    min-height: 500px;
+    height: auto;
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.9);
-    /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
-    /* padding: 20px; */
-    /* backdrop-filter: blur(10px);  */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    overflow: hidden;
+
 }
 
 .text-center {
@@ -77,6 +81,7 @@
 
 .card-body {
     padding: 15px;
+    flex: 1;
 }
 
 .card-title {
@@ -97,61 +102,6 @@
     color: white;
     margin-top: 10px;
     display: inline-block;
-}
-
-.bg-success {
-    background-color: #28a745;
-}
-
-.bg-danger {
-    background-color: #dc3545;
-}
-
-.slick-dots {
-    text-align: center;
-    margin: 0;
-    padding: 10px 0;
-    list-style: none;
-    position: absolute;
-    bottom: -25px;
-    width: 100%;
-}
-
-.slick-dots li {
-    display: inline-block;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-.slick-dots li button {
-    border: none;
-    background-color: transparent;
-    display: block;
-    width: 10px;
-    height: 10px;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.slick-dots li button:before {
-    font-family: 'slick';
-    font-size: 10px;
-    line-height: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    content: '•';
-    text-align: center;
-    color: white;
-    opacity: 0.25;
-    transition: opacity .3s ease;
-}
-
-.slick-dots li.slick-active button:before {
-    opacity: 0.75;
-    color: #fff; 
 }
 
 @media (max-width: 768px) {

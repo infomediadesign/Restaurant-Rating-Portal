@@ -47,7 +47,7 @@ export const fetchRatings = async (id) => {
 
 export const fetchRepliesByRating = async (ratingId) => {
     const response = await axios.post(`${apiBaseURL}/ratings/replies/fetch_by_rating`, {
-        rating_id: +ratingId
+        rating_id: ratingId
     }, { headers: authHeader });
     return response.data.replies || [];
 };
