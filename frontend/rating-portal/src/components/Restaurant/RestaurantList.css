@@ -104,6 +104,14 @@
     display: inline-block;
 }
 
+.bg-success {
+    background-color: #28a745;
+}
+
+.bg-danger {
+    background-color: #dc3545;
+}
+
 @media (max-width: 768px) {
     .col-md-4 {
         width: 100%;

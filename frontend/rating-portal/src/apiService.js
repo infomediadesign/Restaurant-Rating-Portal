@@ -51,3 +51,9 @@ export const fetchRepliesByRating = async (ratingId) => {
     }, { headers: authHeader });
     return response.data.replies || [];
 };
+
+export const fetchAverageRatings = async () => {
+    const response = await axios.get(`${apiBaseURL}/ratings/fetch_avg`, { headers: authHeader });
+    console.log('fetchAverageRatings response:', response.data);
+    return response.data;
+};

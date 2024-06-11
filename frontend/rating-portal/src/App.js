@@ -1,4 +1,3 @@
-// src/App.js
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -21,6 +20,7 @@ import { UserProvider } from "./components/UserContext/UserContext";
 import MyProfilePage from "./components/MyProfile/MyProfile";
 import MyReviews from "./components/MyReviews/MyReviews";
 import Reviews from "./components/RestaurantDetail/Reviews";
+
 
 function App() {
   return (
