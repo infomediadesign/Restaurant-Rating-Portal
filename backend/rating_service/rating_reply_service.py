@@ -183,7 +183,7 @@ def fetch_ratings_by_user(data):
             return {"error": "Failed to connect to the database"}, 500
 
         cursor = connection.cursor(dictionary=True)
-        query = "SELECT fk_restaurant, stars, review, timestamp FROM ratings WHERE fk_user = %s"
+        query = "SELECT pk_rating fk_restaurant, stars, review, timestamp FROM ratings WHERE fk_user = %s"
         cursor.execute(query, (user_id,))
         ratings = cursor.fetchall()
 
