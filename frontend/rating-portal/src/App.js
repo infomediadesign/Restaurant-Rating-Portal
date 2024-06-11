@@ -6,7 +6,6 @@ import RestaurantList from "./components/Restaurant/RestaurantList";
 import RestaurantDetail from './components/RestaurantDetail/RestaurantDetail';
 import OpeningHours from "./components/RestaurantDetail/OpeningHours";
 import RatingComponent from "./components/Ratings/RatingComponent";
-import SearchBar from "./components/SearchBar/SearchBar";
 import AddRestaurantPicture from "./components/AddRestaurantPicture";
 import Login from "./pages/Login/login";
 import RegisterUser from "./pages/Register/registerUser";
@@ -23,6 +22,7 @@ import Reviews from "./components/RestaurantDetail/Reviews";
 
 
 function App() {
+
   return (
     <UserProvider>
       <Router>
@@ -32,10 +32,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/restaurants" element={<RestaurantList />} />
           <Route path="/restaurant/:id" element={<RestaurantDetail />} />
-          <Route path="/opening-hours" element={<OpeningHours />}/>
+          <Route path="/opening-hours" element={<OpeningHours />} />
           <Route path="/register-user" element={<RegisterUser />} />
           <Route path="/register-owner" element={<RegisterOwner />} />
-          <Route path="/serachbar" element={<SearchBar />}/>
           <Route path="/owner-dashboard" element={<OwnerDashboard />} />
           <Route path="/create-restaurant" element={<CreateRestaurant />} />
           <Route path="/edit-restaurant/:id" element={<EditRestaurant />} />
@@ -44,9 +43,8 @@ function App() {
           <Route path="/rating" element={<RatingComponent />} />
           <Route path="/my-reviews" element={<MyReviews />} />
           <Route path="/my-profile" element={<MyProfilePage />} />
-          <Route path="/add-resturant-picture" element={<AddRestaurantPicture />} />
-          <Route path="/add-restaurant-picture" element={<AddRestaurantPicture />}/>
-          <Route path="/reviews" element={<Reviews />}/>
+          <Route path="/add-resturant-picture" element={<AddRestaurantPicture />}/>
+          <Route path="/reviews" element={<Reviews />} />
         </Routes>
       </Router>
     </UserProvider>

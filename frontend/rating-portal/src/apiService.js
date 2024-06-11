@@ -39,17 +39,35 @@ export const createReply = async (id, ratingId, replyText) => {
 };
 
 export const fetchRatings = async (id) => {
-    const response = await axios.post(`${apiBaseURL}/ratings/fetch_by_restaurant`, {
-        restaurant_id: +id
-    }, { headers: authHeader });
-    return response.data.reviews || [];
+  try {
+    const response = await axios.post(
+      `${apiBaseURL}/ratings/fetch_by_restaurant`,
+      {
+        restaurant_id: +id,
+      }, { headers: authHeader }
+    );
+    console.log("API Response for restaurant ID", id + ":", response);
+    return response.data; 
+  } catch (error) {
+    console.error("Error fetching ratings:", error);
+  }
 };
 
 export const fetchRepliesByRating = async (ratingId) => {
-    const response = await axios.post(`${apiBaseURL}/ratings/replies/fetch_by_rating`, {
-        rating_id: ratingId
-    }, { headers: authHeader });
-    return response.data.replies || [];
+  try {
+    const response = await axios.post(
+      `${apiBaseURL}/ratings/replies/fetch_by_rating`,
+      {
+        rating_id: ratingId,
+      },
+      { headers: authHeader }
+    );
+    console.log("API Response for rating ID", ratingId + ":", response.data);
+    return response.data.replies || []; 
+  } catch (error) {
+    console.error("Error fetching replies:", error);
+    return []; 
+  };
 };
 
 export const fetchAverageRatings = async () => {

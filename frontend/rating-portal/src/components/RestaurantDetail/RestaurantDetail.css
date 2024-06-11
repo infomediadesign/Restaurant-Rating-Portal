@@ -7,10 +7,10 @@
     justify-content: center;
 }
 .container {
+    background: rgba(255, 255, 255, 0.9);
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
@@ -24,6 +24,23 @@
 }
 
 .restaurant-name {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.card-body {
+  margin-bottom: 20px;
+}
+
+.card-text {
+  font-size: 16px;
+  
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.restaurant-name {
   font-size: 30px;
   font-weight: bold;
   text-align: center;
@@ -34,10 +51,45 @@
   border-radius: 5px;
 }
 
-.card-text {
-  font-size: 16px;
-  color: #333;
+.reviews-list {
+  margin-top: 30px;
+}
+
+.review-item {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-item .rating-component {
   margin-bottom: 10px;
+}
+
+.reply {
+  background: #f1f1f1;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.reply p {
+  margin: 0 0 5px 0;
+}
+
+.reply small {
+  color: #666;
+}
+
+input[type="text"] {
+  width: calc(100% - 110px);
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
 }
 
 h1 {
@@ -51,20 +103,25 @@ p {
     margin-bottom: 20px;
 }
 
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.timestamp {
+  display: block;
+  color: #999;
+  font-size: 0.8em;
+  margin-top: 5px;
 }
 
+.no-replies {
+  display: block;
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+
 button {
-    padding: 10px 20px;
+    padding: 8px 15px;
     background-color:#ff6347;
     color: white;
-    border: none;
     border-radius: 4px;
     cursor: pointer;
     margin-right: 10px;
@@ -74,6 +131,26 @@ button:hover {
     background-color: #000000d0;
 }
 
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.badge.bg-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.badge.bg-danger {
+  background-color: #dc3545;
+  color: white;
+}
 
 .star {
     cursor: pointer;

@@ -4,7 +4,6 @@ import { UserContext } from "../UserContext/UserContext.js";
 import background from "../../images/background.jpg";
 import "./RestaurantDetail.css";
 import Carousel from "../../components/Carousel/Carousel.js";
-import Reviews from "./Reviews";
 import OpeningHours from "./OpeningHours";
 import RatingComponent from "../Ratings/RatingComponent";
 import {
@@ -20,11 +19,11 @@ import {
 const RestaurantDetail = () => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
+
   const [restaurant, setRestaurant] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
-  const [replyText, setReplyText] = useState("");
   const [replyTexts, setReplyTexts] = useState({});
   const [openingHours, setOpeningHours] = useState([]);
   const [averageRating, setAverageRating] = useState(null);
@@ -38,24 +37,27 @@ const RestaurantDetail = () => {
         console.log("Fetching restaurant details for ID:", id);
         const details = await fetchRestaurantDetails(+id);
         console.log("Restaurant details fetched:", details);
-        const ratings = await fetchRatings(+id);
+
+        const ratingsResponse = await fetchRatings(+id);
+        const ratings = ratingsResponse.ratings || [];
         console.log("Ratings fetched:", ratings);
-        const avgRatings = await fetchAverageRatings();
-        console.log("Average ratings fetched:", avgRatings);
 
         const ratingsWithReplies = await Promise.all(
           ratings.map(async (rating) => {
-            console.log("Fetching replies for rating ID:", rating.pk_rating);
             const replies = await fetchRepliesByRating(rating.pk_rating);
             return { ...rating, replies };
           })
         );
 
         setRestaurant(details);
-        setReviews(ratingsWithReplies);
+        setReviews(ratingsWithReplies.reverse());
+
         const hours = await fetchOpeningHours(+id);
         setOpeningHours(hours);
         console.log("Opening hours fetched:", hours);
+
+        const avgRatings = await fetchAverageRatings();
+        console.log("Average ratings fetched:", avgRatings);
         setAverageRating(parseFloat(avgRatings[id]) || 0);
       } catch (error) {
         console.error("Error fetching details:", error);
@@ -64,32 +66,41 @@ const RestaurantDetail = () => {
         console.log("Fetching process completed.");
       }
     };
-
     fetchDetails();
   }, [id]);
 
   const handleRatingSubmit = async () => {
     console.log("Submitting rating:", { rating, reviewText });
-    if (rating === 0 || !user || !user.pk_user) {
-      alert("Please select a rating and ensure you are logged in.");
+    if (rating === 0) {
+      alert("Please select a rating");
       return;
     }
     setIsLoading(true);
     try {
-      const newReview = await createRating(
+      const response = await createRating(
         user.pk_user,
         +id,
         rating,
         reviewText
       );
-      console.log("New review submitted:", newReview);
-      const preparedReview = {
-        ...newReview,
+      console.log("New review submitted:", response);
+
+      const maxPkRating = Math.max(...reviews.map((r) => r.pk_rating), 0);
+
+      const newReview = {
+        fk_restaurant: +id,
+        fk_user: user.pk_user,
+        pk_rating: maxPkRating + 1,
+        review: reviewText,
+        stars: rating,
         replies: [],
+        timestamp: new Date().toISOString(),
       };
-      setReviews((prevReviews) => [...prevReviews, preparedReview]);
+
+      setReviews((prevReviews) => [newReview, ...prevReviews]);
       setRating(0);
       setReviewText("");
+      console.log("Updated reviews state:", reviews);
       alert("Rating submitted successfully!");
     } catch (error) {
       console.error("Error submitting rating:", error);
@@ -116,21 +127,28 @@ const RestaurantDetail = () => {
       console.log("Submitting reply:", {
         userId: user.pk_user,
         ratingId,
-        replyText,
+        replyText: replyTexts[ratingId],
       });
-      const reply = await createReply(user.pk_user, ratingId, replyText);
+      const reply = await createReply(
+        user.pk_user,
+        ratingId,
+        replyTexts[ratingId]
+      );
       console.log("Reply submission successful:", reply);
+
+      const updatedReplies = await fetchRepliesByRating(ratingId);
+
       const updatedReviews = reviews.map((review) =>
         review.pk_rating === ratingId
-          ? { ...review, replies: [...review.replies, reply] }
+          ? { ...review, replies: updatedReplies }
           : review
       );
       setReviews(updatedReviews);
-      setReplyText();
       setReplyTexts((prevReplyTexts) => ({
         ...prevReplyTexts,
         [ratingId]: "",
       }));
+      console.log("Updated reviews state with new reply:", updatedReviews);
       alert("Reply submitted successfully!");
     } catch (error) {
       console.error("Error submitting reply:", error);
@@ -140,6 +158,7 @@ const RestaurantDetail = () => {
       console.log("Reply submission process completed.");
     }
   };
+
   const handleReplyTextChange = (ratingId, text) => {
     setReplyTexts((prevReplyTexts) => ({
       ...prevReplyTexts,
@@ -158,7 +177,6 @@ const RestaurantDetail = () => {
       <div className="container">
         {restaurant?.images && <Carousel images={restaurant.images} />}
         <h1 className="restaurant-name">{restaurant?.name}</h1>
-        <p className="restaurant-description">{restaurant?.description}</p>
         {restaurant?.verified ? (
           <span className="badge bg-success">Verified</span>
         ) : (
@@ -177,29 +195,6 @@ const RestaurantDetail = () => {
           />
         </div>
         <OpeningHours openingHours={openingHours} />
-        <Reviews reviews={reviews} isLoading={isLoading} />
-        {reviews.map((review) => (
-          <div key={review.pk_rating}>
-            <p>{review.review}</p>
-            {review.replies.map((reply) => (
-              <div key={reply.pk_reply} className="reply">
-                <p>{reply.message}</p>
-                <small>{new Date(reply.timestamp).toLocaleString()}</small>
-              </div>
-            ))}
-            <input
-              type="text"
-              value={replyTexts[review.pk_rating] || ""}
-              onChange={(e) =>
-                handleReplyTextChange(review.pk_rating, e.target.value)
-              }
-              placeholder="Type your reply here"
-            />
-            <button onClick={() => handleReplySubmit(review.pk_rating)}>
-              Submit Reply
-            </button>
-          </div>
-        ))}
         <RatingComponent rating={rating} setRating={setRating} />
         <input
           type="text"
@@ -210,6 +205,42 @@ const RestaurantDetail = () => {
         <button onClick={handleRatingSubmit} disabled={isLoading}>
           Submit Rating
         </button>
+        <div className="reviews-list">
+          <h3>User Reviews:</h3>
+          {reviews.map((rating) => (
+            <div key={rating.pk_rating} className="review-item">
+              <RatingComponent
+                rating={rating.stars}
+                isClickable={false}
+                displayNumeric={true}
+              />
+
+              <p>{rating.review}</p>
+              <small className="timestamp">{new Date(rating.timestamp).toLocaleString()}</small> 
+              {rating.replies && rating.replies.length > 0 ? (
+                rating.replies.map((reply) => (
+                  <div key={reply.pk_reply} className="reply">
+                    <p>{reply.message}</p>
+                    <small className="timestamp">{new Date(reply.timestamp).toLocaleString()}</small>
+                  </div>
+                ))
+              ) : (
+                <p className="no-replies">No replies yet.</p>
+              )}
+              <input
+                type="text"
+                value={replyTexts[rating.pk_rating] || ""}
+                onChange={(e) =>
+                  handleReplyTextChange(rating.pk_rating, e.target.value)
+                }
+                placeholder="Type your reply here"
+              />
+              <button onClick={() => handleReplySubmit(rating.pk_rating)}>
+                Submit Reply
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
