@@ -6,8 +6,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./RestaurantList.css";
-import SearchBar from "../SearchBar/SearchBar";
-import RatingComponent from "../Ratings/RatingComponent";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import RatingComponent from "../../components/Ratings/RatingComponent";
 import { fetchAverageRatings } from "../../apiService";
 
 const RestaurantList = () => {
