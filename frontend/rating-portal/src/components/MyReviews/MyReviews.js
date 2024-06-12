@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { UserContext } from '../UserContext/UserContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import './MyReviews.css';
 
 const MyReviews = () => {
@@ -34,7 +36,7 @@ const MyReviews = () => {
                         setReviews([]);
                     }
 
-                    console.log(response.data)
+                    console.log(response.data);
                 } catch (error) {
                     console.error('Failed to fetch reviews:', error);
                 }
@@ -68,6 +70,14 @@ const MyReviews = () => {
         }
     };
 
+    const renderStars = (count) => {
+        const stars = [];
+        for (let i = 0; i < count; i++) {
+            stars.push(<FontAwesomeIcon key={i} icon={faStar} className="star-icon" />);
+        }
+        return stars;
+    };
+
     if (!user) {
         return <p>Please log in to see your reviews.</p>;
     }
@@ -93,6 +103,8 @@ const MyReviews = () => {
                             ) : (
                                 <div>
                                     <p>{review.review}</p>
+                                    <div>{renderStars(review.stars)}</div>
+                                    <p>Timestamp: {new Date(review.timestamp).toLocaleString()}</p>
                                     <button onClick={() => handleDelete(review.pk_rating)} className="button">Delete</button>
                                 </div>
                             )}

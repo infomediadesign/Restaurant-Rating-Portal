@@ -73,3 +73,8 @@ body {
 .button:last-child {
     margin-right: 0;
 }
+
+.star-icon {
+    color: gold;
+    margin-right: 2px;
+}
