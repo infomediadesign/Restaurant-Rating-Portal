@@ -8,8 +8,6 @@ import './MyReviews.css';
 const MyReviews = () => {
     const { user } = useContext(UserContext);
     const [reviews, setReviews] = useState([]);
-    const [editingReviewId, setEditingReviewId] = useState(null);
-    const [updatedContent, setUpdatedContent] = useState('');
 
     useEffect(() => {
         if (user) {
@@ -91,23 +89,12 @@ const MyReviews = () => {
                 <ul className="reviews-list">
                     {reviews.map((review) => (
                         <li key={review.pk_rating} className="review-item">
-                            {editingReviewId === review.pk_rating ? (
-                                <div>
-                                    <textarea
-                                        value={updatedContent}
-                                        onChange={(e) => setUpdatedContent(e.target.value)}
-                                        className="review-textarea"
-                                    />
-                                    <button onClick={() => setEditingReviewId(null)} className="button">Cancel</button>
-                                </div>
-                            ) : (
-                                <div>
-                                    <p>{review.review}</p>
-                                    <div>{renderStars(review.stars)}</div>
-                                    <p>Timestamp: {new Date(review.timestamp).toLocaleString()}</p>
-                                    <button onClick={() => handleDelete(review.pk_rating)} className="button">Delete</button>
-                                </div>
-                            )}
+                            <div>
+                                <p>{review.review}</p>
+                                <div>{renderStars(review.stars)}</div>
+                                <p>Timestamp: {new Date(review.timestamp).toLocaleString()}</p>
+                                <button onClick={() => handleDelete(review.pk_rating)} className="button">Delete</button>
+                            </div>
                         </li>
                     ))}
                 </ul>
