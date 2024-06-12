@@ -4,6 +4,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: none;
+    background: url('../../images/background.jpg') no-repeat center center fixed;
     justify-content: center;
     background: none;
 }

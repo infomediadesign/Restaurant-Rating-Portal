@@ -59,13 +59,7 @@ const RestaurantList = () => {
   };
 
   return (
-    <div
-      className="bg-container"
-      style={{
-        background: `url(${background}) no-repeat center center fixed`,
-        backgroundSize: "cover",
-      }}
-    >
+    <div className="bg-container">
       <div className="container mt-4">
         <h1 className="text-center mb-4">Restaurants Near You</h1>
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
