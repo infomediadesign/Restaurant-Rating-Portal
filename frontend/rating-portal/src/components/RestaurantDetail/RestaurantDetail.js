@@ -70,6 +70,10 @@ const RestaurantDetail = () => {
   }, [id]);
 
   const handleRatingSubmit = async () => {
+    if (!user || !user.pk_user) {
+      alert("You must be logged in to submit a rating.");
+      return;
+    }
     console.log("Submitting rating:", { rating, reviewText });
     if (rating === 0) {
       alert("Please select a rating");
