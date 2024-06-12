@@ -60,7 +60,7 @@ const RestaurantList = () => {
 
   return (
     <div className="bg-container">
-      <div className="container mt-4">
+      <div className="container">
         <h1 className="text-center mb-4">Restaurants Near You</h1>
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         {filteredRestaurants.length > 0 ? (

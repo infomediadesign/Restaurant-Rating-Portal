@@ -16,9 +16,9 @@
     font-weight: bold; 
     text-align: center; 
     margin-bottom: 20px; 
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); 
+    text-shadow: #ff6347ea; 
     padding: 10px; 
-    background-color: rgba(0, 0, 0, 0.2); 
+    background-color: #ff6347; 
     border-radius: 5px; 
 }
 
