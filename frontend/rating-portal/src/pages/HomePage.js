@@ -1,5 +1,5 @@
     import React from 'react';
-    import RestaurantList from '../components/Restaurant/RestaurantList';
+    import RestaurantList from '../pages/Restaurant/RestaurantList';
 
 
     const HomePage = () => {

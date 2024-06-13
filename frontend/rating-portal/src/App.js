@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/HomePage";
-import RestaurantList from "./components/Restaurant/RestaurantList";
-import RestaurantDetail from './components/RestaurantDetail/RestaurantDetail';
-import OpeningHours from "./components/RestaurantDetail/OpeningHours";
+import RestaurantList from "./pages/Restaurant/RestaurantList";
+import RestaurantDetail from './pages/RestaurantDetail/RestaurantDetail';
+import OpeningHours from "./components/OpeningHours/OpeningHours";
 import RatingComponent from "./components/Ratings/RatingComponent";
 import AddRestaurantPicture from "./components/AddRestaurantPicture";
 import Login from "./pages/Login/login";
@@ -18,7 +18,7 @@ import AddRestaurant from "./components/AddRestaurant/AddRestaurant";
 import { UserProvider } from "./components/UserContext/UserContext";
 import MyProfilePage from "./components/MyProfile/MyProfile";
 import MyReviews from "./components/MyReviews/MyReviews";
-import Reviews from "./components/RestaurantDetail/Reviews";
+import Reviews from "./pages/RestaurantDetail/Reviews";
 
 
 function App() {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { UserContext } from "../UserContext/UserContext.js";
+import { UserContext } from "../../components/UserContext/UserContext.js";
 import background from "../../images/background.jpg";
 import "./RestaurantDetail.css";
 import Carousel from "../../components/Carousel/Carousel.js";
-import OpeningHours from "./OpeningHours";
-import RatingComponent from "../Ratings/RatingComponent";
+import OpeningHours from "../../components/OpeningHours/OpeningHours.js";
+import RatingComponent from "../../components/Ratings/RatingComponent.js";
 import {
   createRating,
   createReply,
@@ -14,7 +14,7 @@ import {
   fetchOpeningHours,
   fetchRepliesByRating,
   fetchAverageRatings,
-} from "../../apiService";
+} from "../../apiService.js";
 
 const RestaurantDetail = () => {
   const { id } = useParams();
