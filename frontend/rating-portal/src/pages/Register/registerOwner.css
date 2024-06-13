@@ -1,0 +1,64 @@
+.register-owner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.register-owner-box {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    width: 500px;
+}
+
+.register-owner-title {
+    color: #ff6347;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.register-owner-input {
+    width: 300px;
+    height: 40px;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.register-owner-button {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.register-owner-button:hover{
+    background-color: white;
+    color: #ff6347;
+}
+
+.register-user-button {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.register-user-button:hover{
+    background-color: white;
+    color: #ff6347;
+}

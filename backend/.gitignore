@@ -1,0 +1,4 @@
+
+user_service/test_api.py
+user_service/.env
+user_service/.pytest_cache

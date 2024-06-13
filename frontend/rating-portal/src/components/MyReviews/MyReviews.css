@@ -1,0 +1,80 @@
+body {
+    background-image: url('../../images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.reviews-container {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #ff6347;
+}
+
+.reviews-list {
+    list-style: none;
+    padding: 0;
+}
+
+.review-item {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+}
+
+.review-item p {
+    margin: 0 0 10px;
+}
+
+.review-textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff6347;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.button:hover {
+    background-color: #ff6347;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button:last-child {
+    margin-right: 0;
+}
+
+.star-icon {
+    color: gold;
+    margin-right: 2px;
+}

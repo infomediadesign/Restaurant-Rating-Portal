@@ -1,0 +1,34 @@
+.carousel-container {
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+}
+
+.carousel-container img {
+    width: 100%;
+    display: block;
+}
+
+.carousel-container button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 100;
+}
+
+.carousel-container button:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.carousel-container button:first-of-type {
+    left: 10px;
+}
+
+.carousel-container button:last-of-type {
+    right: 10px;
+}
